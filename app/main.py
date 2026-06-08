@@ -48,19 +48,31 @@ def create_app() -> FastAPI:
 
     # Cuando el frontend usa credentials: "include", el spec CORS prohibe
     # allow_origins=["*"]. En desarrollo se permite localhost:3000 explicitamente.
+    _localhost_origins = [
+        "http://localhost:3000", "http://127.0.0.1:3000",   # portal Next.js
+        "http://localhost:3001", "http://127.0.0.1:3001",   # portal Next.js alt port
+        "http://localhost:8081", "http://127.0.0.1:8081",   # Expo web
+        "http://localhost:19006",                            # Expo web (legacy)
+    ]
     origins = (
-        [
-            "http://localhost:3000", "http://127.0.0.1:3000",   # portal Next.js
-            "http://localhost:3001", "http://127.0.0.1:3001",   # portal Next.js MediaNetPay
-            "http://localhost:8081", "http://127.0.0.1:8081",   # Expo web
-            "http://localhost:19006",                            # Expo web (legacy)
-        ]
+        _localhost_origins
         if settings.is_development
-        else [
-            settings.api_base_url,
-            "https://medianetpay.ec",
-            "https://www.medianetpay.ec",
-        ]
+        else (
+            # staging: localhost + dominios de producción (para desarrollo contra staging)
+            _localhost_origins + [
+                settings.portal_base_url,
+                "https://medianetpay.ec",
+                "https://www.medianetpay.ec",
+                "https://portal.medianetpay.app",
+            ]
+            if settings.app_env == "staging"
+            else [
+                settings.portal_base_url,
+                "https://medianetpay.ec",
+                "https://www.medianetpay.ec",
+                "https://portal.medianetpay.app",
+            ]
+        )
     )
     app.add_middleware(
         CORSMiddleware,
