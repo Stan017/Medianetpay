@@ -17,8 +17,10 @@ class Settings(BaseSettings):
     # Base de datos
     database_url: str = "postgresql+asyncpg://postgres:password@localhost:5432/medianetpay"
 
-    # Redis
-    redis_url: str = "redis://localhost:6379"
+    # Redis — opcional para beta/producción inicial.
+    # Si no se configura, el rate limiting usa memoria en proceso (chatbot.py).
+    # Para activar Celery workers en el futuro, configurar con URL de Upstash Redis.
+    redis_url: str | None = None
 
     # Conector MediaNet (WebCheckout)
     medianet_api_url: str = "http://localhost:9000"

@@ -7,18 +7,21 @@
 #   2. Push a Artifact Registry (registro privado de GCP)
 #   3. Deploy a Cloud Run
 #
+# Auth: Workload Identity Federation (sin JSON key — estándar Google recomendado)
+#
 # Secrets de GitHub que debes configurar en:
 #   GitHub repo → Settings → Secrets and variables → Actions → New secret
 #
-#   GCP_PROJECT_ID      → ID de tu proyecto GCP (ej: medianetpay-prod)
-#   GCP_SA_KEY          → JSON del service account (en base64)
-#   GCP_REGION          → Región (ej: us-central1)
-#   GCP_AR_REPO         → Nombre del repo en Artifact Registry (ej: medianetpay)
+#   GCP_PROJECT_ID      → project-bbbd494c-4dd7-433a-950
+#   GCP_WIF_PROVIDER    → projects/645879829831/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+#   GCP_SA_EMAIL        → github-actions@project-bbbd494c-4dd7-433a-950.iam.gserviceaccount.com
+#   GCP_REGION          → us-central1
+#   GCP_AR_REPO         → medianetpay
 #
 #   — Variables de entorno del backend en producción —
 #   SECRET_KEY          → Clave secreta JWT (genera con: openssl rand -hex 32)
 #   DATABASE_URL        → URL de Supabase (postgresql+asyncpg://...)
-#   REDIS_URL           → URL de Upstash Redis (redis://...)
+#   REDIS_URL           → URL de Upstash Redis (opcional, dejar vacío para beta)
 #   MEDIANET_API_URL    → URL real del API MediaNet
 #   MEDIANET_API_KEY    → Key del API MediaNet
 #   MEDIANET_API_SECRET → Secret del API MediaNet
@@ -47,11 +50,12 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      # ── 2. Autenticar con GCP ───────────────────────────────────────────────
+      # ── 2. Autenticar con GCP (Workload Identity Federation — sin JSON key) ────
       - name: Autenticar en GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SA_EMAIL }}
 
       # ── 3. Configurar Cloud SDK ─────────────────────────────────────────────
       - name: Configurar gcloud SDK
