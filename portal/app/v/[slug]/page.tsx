@@ -23,7 +23,7 @@ interface VitrinaData {
 async function getVitrina(slug: string): Promise<VitrinaData | null> {
   try {
     const res = await fetch(`${API_BASE}/v1/public/vitrina/${slug}`, {
-      next: { revalidate: 900 }, // caché 15 min en Cloudflare
+      cache: "no-store",
     });
     if (!res.ok) return null;
     return res.json();
