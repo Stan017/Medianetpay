@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MedianetPay - Iniciar Sesión</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config Verbatim -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#a4caf7",
+                        "surface-container-highest": "#dae2fd",
+                        "on-primary-container": "#f8f7ff",
+                        "electric-gradient-end": "#0066FF",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "inverse-on-surface": "#eef0ff",
+                        "secondary-container": "#add2ff",
+                        "surface-container": "#eaedff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e2e7ff",
+                        "on-secondary-container": "#345a81",
+                        "on-tertiary-fixed": "#2b1700",
+                        "primary": "#0050cb",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#21496f",
+                        "electric-gradient-start": "#00C2FF",
+                        "surface-variant": "#dae2fd",
+                        "tertiary-fixed-dim": "#ffb866",
+                        "surface-glass": "rgba(255, 255, 255, 0.7)",
+                        "secondary-fixed": "#d0e4ff",
+                        "tertiary-fixed": "#ffddba",
+                        "outline-variant": "#c2c6d8",
+                        "tertiary-container": "#a26400",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface": "#faf8ff",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0066ff",
+                        "surface-container-low": "#f2f3ff",
+                        "on-surface": "#131b2e",
+                        "on-secondary-fixed": "#001d35",
+                        "surface-bright": "#faf8ff",
+                        "medianet-blue": "#0066FF",
+                        "on-primary-fixed": "#001849",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#814e00",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#424656",
+                        "inverse-primary": "#b3c5ff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#fff7f2",
+                        "primary-fixed": "#dae1ff",
+                        "surface-dim": "#d2d9f4",
+                        "primary-fixed-dim": "#b3c5ff",
+                        "secondary": "#3b6188",
+                        "on-background": "#131b2e",
+                        "on-primary-fixed-variant": "#003fa4",
+                        "outline": "#727687",
+                        "background": "#faf8ff",
+                        "surface-tint": "#0054d6",
+                        "inverse-surface": "#283044",
+                        "deep-navy": "#003358"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "bento-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "code-sm": ["Geist"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "label-md": ["Geist"],
+                        "headline-xl-mobile": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "code-sm": ["13px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-xl-mobile": ["28px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-xl": ["36px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(0, 51, 88, 0.08);
+        }
+        
+        .mesh-gradient {
+            background-color: #faf8ff;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 102, 255, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 51, 88, 0.05) 0px, transparent 50%),
+                radial-gradient(at 50% 0%, rgba(0, 194, 255, 0.03) 0px, transparent 50%);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 80, 203, 0.1);
+        }
+
+        .btn-primary-gradient {
+            background: linear-gradient(135deg, #00C2FF 0%, #0066FF 100%);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface mesh-gradient min-h-screen flex flex-col items-center justify-center p-margin-mobile md:p-margin-desktop overflow-x-hidden">
+<!-- Top Navigation Placeholder (Hidden for transactional flow) -->
+<header class="fixed top-0 left-0 w-full p-8 flex justify-center pointer-events-none">
+<img alt="MedianetPay Logo" class="h-10 md:h-12 pointer-events-auto" src="https://lh3.googleusercontent.com/aida/ADBb0ujOi2N7tFHpQ-k_JmlZEOQQAL29YBDWxFm6BoWRWnE2iC953svrRSaEfuyFHM6cgvn3722jvecIm82eB5aqAQpHDHm0EUhlAAsh0YPyqjC4PMVtHt1Xz_96pFEvYXOjtRrSLrTx3C-Ybk1ynNK8NJjiNNMfQh2umF1PoTH71dz7cScJT3aSXa3PlrCLI20wj4yh7QC2VvmoAprlzfYx3q1Gc4wHpuw9rJyjadK15663ASU-3zR0YRgEeg"/>
+</header>
+<main class="w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-700">
+<!-- Main Login Bento Card -->
+<div class="glass-card rounded-[2rem] p-8 md:p-10 flex flex-col items-center">
+<!-- Header Section -->
+<div class="text-center mb-8">
+<h1 class="font-headline-xl text-headline-xl text-deep-navy mb-2 tracking-tight">Bienvenido</h1>
+<p class="text-on-surface-variant font-body-md opacity-80">Ingresa tus credenciales para continuar</p>
+</div>
+<!-- Form -->
+<form class="w-full space-y-6" onsubmit="return false;">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-on-surface-variant ml-1" for="email">Correo Electrónico</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">mail</span>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest border border-outline-variant/30 rounded-2xl font-body-md focus:border-primary transition-all duration-200" id="email" name="email" placeholder="nombre@empresa.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center px-1">
+<label class="block font-label-md text-label-md text-on-surface-variant" for="password">Contraseña</label>
+<a class="text-primary font-label-md text-label-md hover:underline decoration-2 underline-offset-4" href="#">¿Olvidaste tu contraseña?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">lock</span>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest border border-outline-variant/30 rounded-2xl font-body-md focus:border-primary transition-all duration-200" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- Primary CTA -->
+<button class="btn-primary-gradient w-full py-4 text-on-primary font-headline-md text-headline-md rounded-2xl shadow-lg shadow-primary/20 hover:shadow-primary/30 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group" type="submit">
+<span>Iniciar Sesión</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="w-full flex items-center gap-4 my-8">
+<div class="h-px flex-1 bg-outline-variant/30"></div>
+<span class="text-on-surface-variant font-label-md text-label-md uppercase tracking-widest opacity-60">O continúa con</span>
+<div class="h-px flex-1 bg-outline-variant/30"></div>
+</div>
+<!-- Social Login Bento Sub-grid -->
+<div class="grid grid-cols-2 gap-4 w-full">
+<button class="flex items-center justify-center gap-3 py-3 px-4 bg-surface-container-low border border-outline-variant/20 rounded-xl hover:bg-white hover:shadow-md transition-all duration-200">
+<img alt="Google" class="h-5 w-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwd8dG9JZFA6YZvu6jCEjEA8FrcShazTBHYhkQgKm1jFeChNotI5G6Q3N1FTYzUWSBpxUcuzQ9y9zyfBruf2r6FeaDq19qBd-P3ciIjTaG2NnYHYdK9vASlPbm_YNjh4h9sMhzZMaPd1ysQ3vtsEXKxrANZ1Sr_xEiIYjPOXIB1YQyz-BZg-JfVtL67PzsXiL3nEVjZYvjQeW4m75xB_npHIouy2SCND23rVQYXGCOfmpPtwejLxcgPuyplfej5qBdNu3jGETlVyY"/>
+<span class="font-label-md text-label-md text-deep-navy">Google</span>
+</button>
+<button class="flex items-center justify-center gap-3 py-3 px-4 bg-surface-container-low border border-outline-variant/20 rounded-xl hover:bg-white hover:shadow-md transition-all duration-200">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">ios</span>
+<span class="font-label-md text-label-md text-deep-navy">Apple</span>
+</button>
+</div>
+<!-- Footer Link -->
+<p class="mt-10 text-on-surface-variant font-body-md">
+                ¿No tienes una cuenta? 
+                <a class="text-primary font-bold hover:underline decoration-2 underline-offset-4 ml-1" href="#">Crear Cuenta</a>
+</p>
+</div>
+<!-- Trust Badges (Minimalist) -->
+<div class="mt-8 flex justify-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500 cursor-default">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="font-code-sm text-code-sm uppercase tracking-tighter">Secure 256-bit SSL</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">gpp_good</span>
+<span class="font-code-sm text-code-sm uppercase tracking-tighter">PCI DSS Compliant</span>
+</div>
+</div>
+</main>
+<!-- Background Decorative Elements -->
+<div class="fixed top-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-primary/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-[30vw] h-[30vw] bg-electric-gradient-start/5 rounded-full blur-[100px] -z-10"></div>
+<script>
+        // Simple Interaction Logic
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'scale(0.96)';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = 'scale(1)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'scale(1)';
+            });
+        });
+
+        // Form feedback simulation
+        const loginBtn = document.querySelector('button[type="submit"]');
+        loginBtn.addEventListener('click', () => {
+            const originalContent = loginBtn.innerHTML;
+            loginBtn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            `;
+            setTimeout(() => {
+                loginBtn.innerHTML = originalContent;
+            }, 2000);
+        });
+    </script>
+</body></html>

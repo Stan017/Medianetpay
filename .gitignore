@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.venv/
+venv/
+node_modules/
+.DS_Store
+Thumbs.db
+Docs/*.pdf

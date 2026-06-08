@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+<meta charset="utf-8"/>
+<link rel="icon" type="image/png" href="/favicon.png"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Desarrolladores | MedianetPay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#0050cb",
+        "on-primary": "#ffffff",
+        "deep-navy": "#003358",
+        "medianet-blue": "#0066FF",
+        "on-background": "#131b2e",
+        "on-surface": "#131b2e",
+        "on-surface-variant": "#424656",
+        "surface": "#faf8ff",
+        "surface-bright": "#faf8ff",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#f2f3ff",
+        "surface-container": "#eaedff",
+        "surface-container-high": "#e2e7ff",
+        "surface-glass": "rgba(255,255,255,0.7)",
+        "outline": "#727687",
+        "outline-variant": "#c2c6d8",
+        "primary-container": "#0066ff",
+        "on-primary-container": "#f8f7ff",
+        "secondary": "#3b6188",
+        "secondary-container": "#add2ff",
+        "on-secondary-container": "#345a81",
+        "error": "#ba1a1a",
+        "tertiary": "#814e00",
+        "surface-tint": "#0054d6"
+      },
+      fontFamily: {
+        sans: ["Outfit", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"]
+      },
+      spacing: {
+        "margin-desktop": "64px",
+        "margin-mobile": "20px"
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { font-family: 'Outfit', sans-serif; }
+  .nav-blur { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .sidebar-link { transition: all 0.15s ease; border-left: 2px solid transparent; }
+  .sidebar-link:hover { border-left-color: #0050cb; color: #0050cb; background: #f2f3ff; }
+  .sidebar-link.active { border-left-color: #0050cb; color: #0050cb; background: #eaedff; font-weight: 600; }
+  .code-block {
+    background: #0d1117;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    color: #e6edf3;
+  }
+  .code-block pre { color: #e6edf3; }
+  .code-block .tok-key   { color: #79c0ff; }
+  .code-block .tok-str   { color: #a5d6ff; }
+  .code-block .tok-num   { color: #f2cc60; }
+  .code-block .tok-cmt   { color: #8b949e; font-style: italic; }
+  .code-block .tok-kw    { color: #ff7b72; }
+  .code-block .tok-fn    { color: #d2a8ff; }
+  .code-block .tok-url   { color: #58a6ff; }
+  .code-block .tok-ok    { color: #3fb950; }
+  .code-block .tok-err   { color: #f85149; }
+  .code-block .tok-label { color: #e3b341; font-weight: 500; }
+  .tab-btn { transition: all 0.2s; }
+  .tab-btn.active { background: #0050cb; color: white; }
+  .section-anchor { scroll-margin-top: 80px; }
+  .badge-get  { background: #dcfce7; color: #166534; }
+  .badge-post { background: #dbeafe; color: #1e40af; }
+  .field-required { background: #fee2e2; color: #991b1b; font-size: 11px; padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+  .field-optional { background: #f3f4f6; color: #6b7280; font-size: 11px; padding: 1px 6px; border-radius: 4px; }
+  .plugin-card { transition: all 0.25s cubic-bezier(0.4,0,0.2,1); }
+  .plugin-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,51,88,0.10); }
+</style>
+</head>
+<body class="bg-surface text-on-surface overflow-x-hidden">
+
+<!-- ============================================================ NAV ============================================================ -->
+<nav class="fixed top-0 w-full z-50 bg-surface-glass nav-blur border-b border-outline-variant/30 flex justify-between items-center px-5 md:px-16 py-4">
+  <div class="flex items-center gap-12">
+    <a href="landing.html"><img alt="MedianetPay" class="h-8 w-auto" src="/logo.png"/></a>
+    <div class="hidden md:flex gap-8">
+      <a class="text-sm text-on-surface-variant hover:text-primary transition-colors" href="landing.html">Servicios</a>
+      <a class="text-sm text-primary font-semibold border-b-2 border-primary pb-0.5" href="#">Desarrolladores</a>
+      <a class="text-sm text-on-surface-variant hover:text-primary transition-colors" href="landing.html">Empresa</a>
+      <a class="text-sm text-on-surface-variant hover:text-primary transition-colors" href="landing.html">Precios</a>
+    </div>
+  </div>
+  <div class="flex items-center gap-4">
+    <a href="/login" class="hidden md:block text-sm font-semibold text-on-surface hover:opacity-70 transition-opacity">Iniciar Sesion</a>
+    <a href="/register" class="px-5 py-2 rounded-full text-sm font-semibold text-white hover:scale-105 transition-transform" style="background:#F89937">Empezar Ahora</a>
+  </div>
+</nav>
+
+<!-- ============================================================ LAYOUT ============================================================ -->
+<div class="flex min-h-screen pt-16">
+
+  <!-- ---- SIDEBAR ---- -->
+  <aside class="hidden lg:block w-64 shrink-0 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto border-r border-outline-variant/30 bg-surface-container-lowest py-8">
+    <div class="px-6 mb-6">
+      <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-widest mb-1">Documentacion</p>
+      <p class="text-xs text-on-surface-variant/70">API v1 — WebCheckout</p>
+    </div>
+    <nav class="space-y-0.5 px-2">
+      <a href="#quickstart"    class="sidebar-link active flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm">
+        <span class="material-symbols-outlined text-base">rocket_launch</span>Inicio rapido
+      </a>
+      <a href="#auth"          class="sidebar-link flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm text-on-surface-variant">
+        <span class="material-symbols-outlined text-base">key</span>Autenticacion
+      </a>
+      <a href="#create-payment" class="sidebar-link flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm text-on-surface-variant">
+        <span class="material-symbols-outlined text-base">payments</span>Crear un pago
+      </a>
+      <a href="#webhook"       class="sidebar-link flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm text-on-surface-variant">
+        <span class="material-symbols-outlined text-base">webhook</span>Webhook (url_back)
+      </a>
+      <a href="#testmode"      class="sidebar-link flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm text-on-surface-variant">
+        <span class="material-symbols-outlined text-base">science</span>Modo de prueba
+      </a>
+      <a href="#plugins"       class="sidebar-link flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm text-on-surface-variant">
+        <span class="material-symbols-outlined text-base">extension</span>Plugins &amp; SDKs
+      </a>
+      <a href="#fields"        class="sidebar-link flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm text-on-surface-variant">
+        <span class="material-symbols-outlined text-base">list_alt</span>Referencia de campos
+      </a>
+      <a href="#errors"        class="sidebar-link flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm text-on-surface-variant">
+        <span class="material-symbols-outlined text-base">error</span>Manejo de errores
+      </a>
+    </nav>
+    <div class="px-6 mt-8 pt-6 border-t border-outline-variant/30">
+      <a href="https://qa-api.medianetpay.ec/app/swagger-ui/index.html" target="_blank"
+         class="flex items-center gap-2 text-xs text-primary hover:underline">
+        <span class="material-symbols-outlined text-sm">open_in_new</span>Swagger QA
+      </a>
+      <a href="https://api.medianetpay.ec:4443/app/swagger-ui/index.html" target="_blank"
+         class="flex items-center gap-2 text-xs text-primary hover:underline mt-2">
+        <span class="material-symbols-outlined text-sm">open_in_new</span>Swagger Produccion
+      </a>
+    </div>
+  </aside>
+
+  <!-- ---- CONTENT ---- -->
+  <main class="flex-1 min-w-0 max-w-5xl mx-auto px-5 md:px-12 py-12 space-y-24">
+
+    <!-- ================================================================ HERO ================================================================ -->
+    <div class="section-anchor" id="quickstart">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-4">
+        <span class="material-symbols-outlined text-sm">rocket_launch</span>Inicio rapido
+      </div>
+      <h1 class="text-4xl md:text-5xl font-black text-on-surface leading-tight mb-4">
+        Acepta pagos con<br/><span style="color:#003358">Medianet</span><span style="color:#F89937">Pay</span> en minutos.
+      </h1>
+      <p class="text-lg text-on-surface-variant max-w-2xl mb-8">
+        Una sola llamada a nuestra API genera un link de pago seguro. El cliente paga en la pagina certificada PCI DSS de MedianetPay, y tu recibes la confirmacion en tiempo real via webhook.
+      </p>
+
+      <!-- 3-step flow -->
+      <div class="grid md:grid-cols-3 gap-4 mb-10">
+        <div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-5">
+          <div class="w-8 h-8 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center mb-3">1</div>
+          <h3 class="font-semibold text-sm mb-1">Obtener credenciales</h3>
+          <p class="text-xs text-on-surface-variant">Crea tu cuenta en medianetpay.ec y genera tu <code class="bg-surface-container px-1 rounded">key_webservice</code> desde Configuracion &rarr; Seguridad.</p>
+        </div>
+        <div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-5">
+          <div class="w-8 h-8 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center mb-3">2</div>
+          <h3 class="font-semibold text-sm mb-1">Crear el link de pago</h3>
+          <p class="text-xs text-on-surface-variant">Llama al endpoint WebCheckout con el monto y descripcion. Recibiras un link de pago. Redirige al cliente a ese link.</p>
+        </div>
+        <div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-5">
+          <div class="w-8 h-8 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center mb-3">3</div>
+          <h3 class="font-semibold text-sm mb-1">Recibir confirmacion</h3>
+          <p class="text-xs text-on-surface-variant">MedianetPay hace un POST a tu <code class="bg-surface-container px-1 rounded">url_back</code> con el resultado. Actualiza el estado de la orden.</p>
+        </div>
+      </div>
+
+      <!-- Quick example -->
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div>
+          <h2 class="font-semibold text-base mb-2">Ejemplo minimo en Python</h2>
+          <p class="text-sm text-on-surface-variant mb-4">Con estas 15 lineas tienes un flujo de pago completo funcionando en QA.</p>
+          <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 flex gap-2 text-xs text-amber-800">
+            <span class="material-symbols-outlined text-sm shrink-0 mt-0.5">info</span>
+            Cambia <strong>URL_QA</strong> por <strong>URL_PROD</strong> y las credenciales para ir a produccion.
+          </div>
+        </div>
+        <div class="code-block p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">Python 3 — requests</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre><span class="tok-kw">import</span> requests
+
+<span class="tok-cmt"># QA — no cobros reales</span>
+URL = <span class="tok-str">"https://qa-api.medianetpay.ec/app/webservice/webcheckout/rest"</span>
+
+payload = {
+    <span class="tok-key">"username"</span>:           <span class="tok-str">"tu_usuario@comercio.com"</span>,
+    <span class="tok-key">"key_webservice"</span>:     <span class="tok-str">"tu-llave-de-36-caracteres"</span>,
+    <span class="tok-key">"reference"</span>:         <span class="tok-str">"ORD-001"</span>,
+    <span class="tok-key">"currency"</span>:          <span class="tok-str">"USD"</span>,
+    <span class="tok-key">"value"</span>:             <span class="tok-num">50.00</span>,
+    <span class="tok-key">"value_base_not_iva"</span>:<span class="tok-num">43.48</span>,
+    <span class="tok-key">"iva"</span>:               <span class="tok-num">15</span>,
+    <span class="tok-key">"description"</span>:      <span class="tok-str">"Compra en Mi Tienda"</span>,
+    <span class="tok-key">"url_back"</span>:         <span class="tok-str">"https://tu-sitio.com/webhook"</span>,
+    <span class="tok-key">"url_redirect"</span>:     <span class="tok-str">"https://tu-sitio.com/gracias"</span>,
+}
+
+res  = requests.post(URL, json=payload)
+link = res.json()[<span class="tok-str">"link"</span>]
+<span class="tok-cmt"># -> redirigir al cliente a `link`</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <hr class="border-outline-variant/30"/>
+
+    <!-- ================================================================ AUTH ================================================================ -->
+    <div class="section-anchor" id="auth">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-4">
+        <span class="material-symbols-outlined text-sm">key</span>Autenticacion
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+        <div>
+          <h2 class="text-2xl font-bold mb-3">Credenciales</h2>
+          <p class="text-sm text-on-surface-variant mb-4">
+            MedianetPay no usa headers <code class="bg-surface-container px-1 rounded text-xs">Authorization</code>. Las credenciales van dentro del body JSON de cada request.
+          </p>
+          <div class="space-y-3">
+            <div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <code class="text-sm font-mono font-semibold text-primary">username</code>
+                <span class="field-required">Requerido</span>
+              </div>
+              <p class="text-xs text-on-surface-variant">Tu correo de acceso a la plataforma MedianetPay. Maximo 30 caracteres.</p>
+            </div>
+            <div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <code class="text-sm font-mono font-semibold text-primary">key_webservice</code>
+                <span class="field-required">Requerido</span>
+              </div>
+              <p class="text-xs text-on-surface-variant">Llave de 36 caracteres. Generala desde tu portal: <strong>Configuracion general &rarr; Seguridad Webservice &rarr; Llave Webservice</strong>. Esta llave se invalida si la regeneras.</p>
+            </div>
+          </div>
+          <div class="mt-4 bg-red-50 border border-red-200 rounded-lg p-3 flex gap-2 text-xs text-red-800">
+            <span class="material-symbols-outlined text-sm shrink-0 mt-0.5">warning</span>
+            Nunca expongas <code>key_webservice</code> en frontend publico (JS del navegador). Solo llamadas server-side.
+          </div>
+        </div>
+        <div class="code-block p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">Donde encontrar las credenciales</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre><span class="tok-cmt">// Portal MedianetPay</span>
+<span class="tok-cmt">// Configuracion -> Seguridad Webservice</span>
+
+{
+  <span class="tok-key">"username"</span>:       <span class="tok-str">"mi_email@empresa.com"</span>,
+  <span class="tok-key">"key_webservice"</span>: <span class="tok-str">"a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span>
+}
+
+<span class="tok-cmt">// Ambientes disponibles:</span>
+<span class="tok-cmt">// QA      -> qa-api.medianetpay.ec</span>
+<span class="tok-cmt">// Prod    -> api.medianetpay.ec:4443</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <hr class="border-outline-variant/30"/>
+
+    <!-- ================================================================ CREATE PAYMENT ================================================================ -->
+    <div class="section-anchor" id="create-payment">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-4">
+        <span class="material-symbols-outlined text-sm">payments</span>Crear un pago
+      </div>
+      <h2 class="text-2xl font-bold mb-2">POST /app/webservice/webcheckout/rest</h2>
+      <p class="text-sm text-on-surface-variant mb-6">Genera un link de pago unico. El cliente es redirigido a ese link para completar el pago en la pagina certificada PCI DSS de MedianetPay.</p>
+
+      <!-- Tabs: Request / Response / cURL / PHP -->
+      <div class="mb-4 flex gap-2 flex-wrap">
+        <button onclick="showTab('req-py')" id="tab-req-py" class="tab-btn active px-4 py-1.5 rounded-full text-sm border border-outline-variant/50 font-medium">Python</button>
+        <button onclick="showTab('req-php')" id="tab-req-php" class="tab-btn px-4 py-1.5 rounded-full text-sm border border-outline-variant/50 font-medium text-on-surface-variant">PHP</button>
+        <button onclick="showTab('req-node')" id="tab-req-node" class="tab-btn px-4 py-1.5 rounded-full text-sm border border-outline-variant/50 font-medium text-on-surface-variant">Node.js</button>
+        <button onclick="showTab('req-curl')" id="tab-req-curl" class="tab-btn px-4 py-1.5 rounded-full text-sm border border-outline-variant/50 font-medium text-on-surface-variant">cURL</button>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6 mb-8">
+        <!-- Left: explanation -->
+        <div class="space-y-4">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="badge-post text-xs font-bold px-2 py-0.5 rounded">POST</span>
+              <code class="text-xs font-mono text-on-surface-variant break-all">https://api.medianetpay.ec:4443/app/webservice/webcheckout/rest</code>
+            </div>
+            <p class="text-xs text-blue-800">El servidor responde en menos de 2 segundos con el link de pago. Redirige inmediatamente al cliente a ese URL.</p>
+          </div>
+          <div class="text-sm text-on-surface-variant space-y-2">
+            <p><strong>IVA Ecuador:</strong> El IVA vigente es <strong>15%</strong>. El campo <code class="bg-surface-container px-1 rounded text-xs">value_base_not_iva</code> es el monto sin IVA.</p>
+            <p class="text-xs bg-surface-container-low rounded-lg p-3 font-mono">
+              value_base_not_iva = value / 1.15<br/>
+              <span class="text-on-surface-variant/60">// ej: $50 / 1.15 = $43.48</span>
+            </p>
+            <p><strong>reference:</strong> Tu identificador unico de orden. Maximo 40 caracteres. Lo recibiras de vuelta en el webhook.</p>
+            <p><strong>url_back:</strong> MedianetPay hace un POST aqui cuando el pago termina. Debe ser una URL publica accesible desde internet.</p>
+          </div>
+        </div>
+
+        <!-- Right: code blocks -->
+        <div>
+          <div id="content-req-py" class="code-block p-5 code-tab">
+            <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">Python (requests)</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre><span class="tok-kw">import</span> requests
+
+url = <span class="tok-str">"https://api.medianetpay.ec:4443/app/webservice/webcheckout/rest"</span>
+monto = <span class="tok-num">50.00</span>
+
+payload = {
+    <span class="tok-key">"username"</span>:           <span class="tok-str">"mi_email@empresa.com"</span>,
+    <span class="tok-key">"key_webservice"</span>:     <span class="tok-str">"tu-llave-36-chars"</span>,
+    <span class="tok-key">"reference"</span>:         <span class="tok-str">"ORD-2024-001"</span>,
+    <span class="tok-key">"currency"</span>:          <span class="tok-str">"USD"</span>,
+    <span class="tok-key">"value"</span>:             monto,
+    <span class="tok-key">"value_base_not_iva"</span>: <span class="tok-fn">round</span>(monto / <span class="tok-num">1.15</span>, <span class="tok-num">2</span>),
+    <span class="tok-key">"iva"</span>:               <span class="tok-num">15</span>,
+    <span class="tok-key">"description"</span>:      <span class="tok-str">"Pedido #ORD-2024-001"</span>,
+    <span class="tok-key">"url_back"</span>:         <span class="tok-str">"https://mi-tienda.ec/webhook/pago"</span>,
+    <span class="tok-key">"url_redirect"</span>:     <span class="tok-str">"https://mi-tienda.ec/gracias?orden=ORD-001"</span>,
+    <span class="tok-key">"person_data"</span>: {
+        <span class="tok-key">"person_name"</span>:     <span class="tok-str">"Juan"</span>,
+        <span class="tok-key">"person_lastname"</span>: <span class="tok-str">"Perez"</span>,
+        <span class="tok-key">"person_email"</span>:    <span class="tok-str">"juan@email.com"</span>,
+        <span class="tok-key">"person_phone"</span>:    <span class="tok-str">"0987654321"</span>,
+        <span class="tok-key">"person_document"</span>: <span class="tok-str">"0906778039"</span>,
+        <span class="tok-key">"person_document_type"</span>: <span class="tok-str">"CC"</span>
+    }
+}
+
+res  = requests.post(url, json=payload, timeout=<span class="tok-num">30</span>)
+link = res.json()[<span class="tok-str">"link"</span>]
+<span class="tok-cmt"># Redirigir al cliente:</span>
+<span class="tok-cmt"># return redirect(link, code=302)</span></pre>
+          </div>
+
+          <div id="content-req-php" class="code-block p-5 code-tab hidden">
+            <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">PHP (cURL)</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre>$url   = <span class="tok-str">"https://api.medianetpay.ec:4443/app/webservice/webcheckout/rest"</span>;
+$monto = <span class="tok-num">50.00</span>;
+
+$payload = json_encode([
+    <span class="tok-str">"username"</span>           => <span class="tok-str">"mi_email@empresa.com"</span>,
+    <span class="tok-str">"key_webservice"</span>     => <span class="tok-str">"tu-llave-36-chars"</span>,
+    <span class="tok-str">"reference"</span>         => <span class="tok-str">"ORD-2024-001"</span>,
+    <span class="tok-str">"currency"</span>          => <span class="tok-str">"USD"</span>,
+    <span class="tok-str">"value"</span>             => $monto,
+    <span class="tok-str">"value_base_not_iva"</span>=> <span class="tok-fn">round</span>($monto / <span class="tok-num">1.15</span>, <span class="tok-num">2</span>),
+    <span class="tok-str">"iva"</span>               => <span class="tok-num">15</span>,
+    <span class="tok-str">"description"</span>      => <span class="tok-str">"Pedido #ORD-2024-001"</span>,
+    <span class="tok-str">"url_back"</span>         => <span class="tok-str">"https://mi-tienda.ec/webhook/pago"</span>,
+    <span class="tok-str">"url_redirect"</span>     => <span class="tok-str">"https://mi-tienda.ec/gracias"</span>,
+]);
+
+$ch = <span class="tok-fn">curl_init</span>($url);
+<span class="tok-fn">curl_setopt</span>($ch, CURLOPT_POSTFIELDS,   $payload);
+<span class="tok-fn">curl_setopt</span>($ch, CURLOPT_HTTPHEADER,   [<span class="tok-str">"Content-Type: application/json"</span>]);
+<span class="tok-fn">curl_setopt</span>($ch, CURLOPT_RETURNTRANSFER, <span class="tok-kw">true</span>);
+<span class="tok-fn">curl_setopt</span>($ch, CURLOPT_TIMEOUT,       <span class="tok-num">30</span>);
+$response = <span class="tok-fn">json_decode</span>(<span class="tok-fn">curl_exec</span>($ch));
+<span class="tok-fn">curl_close</span>($ch);
+
+<span class="tok-fn">header</span>(<span class="tok-str">"Location: " . $response->link</span>);
+<span class="tok-kw">exit</span>;</pre>
+          </div>
+
+          <div id="content-req-node" class="code-block p-5 code-tab hidden">
+            <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">Node.js (fetch)</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre><span class="tok-kw">const</span> monto = <span class="tok-num">50.00</span>;
+<span class="tok-kw">const</span> res = <span class="tok-kw">await</span> <span class="tok-fn">fetch</span>(
+  <span class="tok-str">"https://api.medianetpay.ec:4443/app/webservice/webcheckout/rest"</span>,
+  {
+    method: <span class="tok-str">"POST"</span>,
+    headers: { <span class="tok-str">"Content-Type"</span>: <span class="tok-str">"application/json"</span> },
+    body: <span class="tok-fn">JSON.stringify</span>({
+      username:           <span class="tok-str">"mi_email@empresa.com"</span>,
+      key_webservice:     <span class="tok-str">"tu-llave-36-chars"</span>,
+      reference:          <span class="tok-str">"ORD-2024-001"</span>,
+      currency:           <span class="tok-str">"USD"</span>,
+      value:              monto,
+      value_base_not_iva: <span class="tok-fn">parseFloat</span>((monto / <span class="tok-num">1.15</span>).toFixed(<span class="tok-num">2</span>)),
+      iva:                <span class="tok-num">15</span>,
+      description:        <span class="tok-str">"Pedido #ORD-2024-001"</span>,
+      url_back:           <span class="tok-str">"https://mi-tienda.ec/webhook/pago"</span>,
+      url_redirect:       <span class="tok-str">"https://mi-tienda.ec/gracias"</span>,
+    }),
+  }
+);
+<span class="tok-kw">const</span> { link } = <span class="tok-kw">await</span> res.<span class="tok-fn">json</span>();
+<span class="tok-cmt">// res.redirect(302, link)</span></pre>
+          </div>
+
+          <div id="content-req-curl" class="code-block p-5 code-tab hidden">
+            <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">cURL</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre><span class="tok-kw">curl</span> -X POST \
+  <span class="tok-str">"https://api.medianetpay.ec:4443/app/webservice/webcheckout/rest"</span> \
+  -H <span class="tok-str">"Content-Type: application/json"</span> \
+  -d <span class="tok-str">'{
+    "username":           "mi_email@empresa.com",
+    "key_webservice":     "tu-llave-36-chars",
+    "reference":          "ORD-2024-001",
+    "currency":           "USD",
+    "value":              50.00,
+    "value_base_not_iva": 43.48,
+    "iva":                15,
+    "description":        "Pedido #ORD-2024-001",
+    "url_back":           "https://mi-tienda.ec/webhook/pago",
+    "url_redirect":       "https://mi-tienda.ec/gracias"
+  }'</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Response -->
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold text-sm mb-2">Respuesta exitosa</h3>
+          <p class="text-sm text-on-surface-variant">El servidor retorna un unico campo <code class="bg-surface-container px-1 rounded text-xs">link</code>. Redirige al cliente a esa URL inmediatamente.</p>
+        </div>
+        <div class="code-block p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2"><span class="badge-get text-xs font-bold px-2 py-0.5 rounded">200 OK</span><span class="text-white/50 text-xs font-mono">application/json</span></div>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs"><span class="material-symbols-outlined" style="font-size:15px">content_copy</span></button>
+          </div>
+<pre>{
+  <span class="tok-key">"link"</span>: <span class="tok-str">"https://qa.medianetpay.ec/payment/AKO_eAXGdtP..."</span>
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <hr class="border-outline-variant/30"/>
+
+    <!-- ================================================================ WEBHOOK ================================================================ -->
+    <div class="section-anchor" id="webhook">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-4">
+        <span class="material-symbols-outlined text-sm">webhook</span>Webhook (url_back)
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+        <div>
+          <h2 class="text-2xl font-bold mb-3">Recibir confirmacion de pago</h2>
+          <p class="text-sm text-on-surface-variant mb-4">
+            Cuando el cliente termina el pago (o lo cancela), MedianetPay hace un <strong>POST</strong> a tu <code class="bg-surface-container px-1 rounded text-xs">url_back</code> con el resultado. Este endpoint debe ser publico y responder <code class="bg-surface-container px-1 rounded text-xs">200 OK</code>.
+          </p>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-start gap-2">
+              <span class="material-symbols-outlined text-ok text-green-600 text-base mt-0.5">check_circle</span>
+              <span><code class="bg-surface-container px-1 rounded text-xs">response: "Aprobada"</code> — Pago exitoso. Acredita la orden.</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="material-symbols-outlined text-err text-red-500 text-base mt-0.5">cancel</span>
+              <span><code class="bg-surface-container px-1 rounded text-xs">response: "Rechazada"</code> — Pago fallido. No procesar.</span>
+            </div>
+          </div>
+          <div class="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3 flex gap-2 text-xs text-amber-800">
+            <span class="material-symbols-outlined text-sm shrink-0 mt-0.5">info</span>
+            <span>Siempre verifica el estado via webhook, no por la URL de retorno del cliente. El cliente puede cerrar el navegador antes de que lo redirijan.</span>
+          </div>
+          <div class="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-3 flex gap-2 text-xs text-blue-800">
+            <span class="material-symbols-outlined text-sm shrink-0 mt-0.5">security</span>
+            <span>Seguridad: filtra las IPs entrantes a las de MedianetPay. Guarda el <code>reference</code> original para vincular con tu orden.</span>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="code-block p-5">
+            <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">POST a tu url_back (JSON de MedianetPay)</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre>{
+  <span class="tok-key">"response"</span>:          <span class="tok-ok">"Aprobada"</span>,
+  <span class="tok-key">"reference"</span>:         <span class="tok-str">"ORD-2024-001"</span>,
+  <span class="tok-key">"currency"</span>:          <span class="tok-str">"USD"</span>,
+  <span class="tok-key">"amount"</span>:            <span class="tok-str">"50.00"</span>,
+  <span class="tok-key">"method"</span>:            <span class="tok-str">"VISA"</span>,
+  <span class="tok-key">"payment_reference"</span>: <span class="tok-str">"MEDIANET-PAY-00123"</span>,
+  <span class="tok-key">"authorization"</span>:     <span class="tok-str">"789012"</span>,
+  <span class="tok-key">"deferred"</span>:          <span class="tok-kw">null</span>,
+  <span class="tok-key">"deferred_term"</span>:     <span class="tok-kw">null</span>,
+  <span class="tok-key">"additional_data"</span>:   {}
+}</pre>
+          </div>
+          <div class="code-block p-5">
+            <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">Handler en Python (FastAPI)</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre>@app.<span class="tok-fn">post</span>(<span class="tok-str">"/webhook/pago"</span>)
+<span class="tok-kw">async def</span> <span class="tok-fn">webhook_medianet</span>(request: Request):
+    data = <span class="tok-kw">await</span> request.<span class="tok-fn">json</span>()
+
+    reference = data[<span class="tok-str">"reference"</span>]      <span class="tok-cmt"># tu ID de orden</span>
+    aprobada  = data[<span class="tok-str">"response"</span>] == <span class="tok-str">"Aprobada"</span>
+    auth_code = data.<span class="tok-fn">get</span>(<span class="tok-str">"authorization"</span>)
+
+    <span class="tok-kw">if</span> aprobada:
+        <span class="tok-kw">await</span> db.<span class="tok-fn">marcar_pagada</span>(reference, auth_code)
+    <span class="tok-kw">else</span>:
+        <span class="tok-kw">await</span> db.<span class="tok-fn">marcar_fallida</span>(reference)
+
+    <span class="tok-kw">return</span> {<span class="tok-str">"ok"</span>: <span class="tok-kw">True</span>}  <span class="tok-cmt"># siempre 200</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="border-outline-variant/30"/>
+
+    <!-- ================================================================ TEST MODE ================================================================ -->
+    <div class="section-anchor" id="testmode">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-4">
+        <span class="material-symbols-outlined text-sm">science</span>Modo de prueba
+      </div>
+      <h2 class="text-2xl font-bold mb-2">Ambiente QA — Simulador</h2>
+      <p class="text-sm text-on-surface-variant mb-6">El ambiente QA tiene un simulador de pagos. No se procesan cobros reales. Debes activar el simulador desde tu panel QA antes de probarlo.</p>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-green-50 border border-green-200 rounded-xl p-5">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined text-green-600">check_circle</span>
+            <h3 class="font-semibold text-sm text-green-800">Pago APROBADO</h3>
+          </div>
+          <p class="text-sm text-green-700 mb-2">Envia un monto <strong>menor</strong> al umbral configurado en QA.</p>
+          <div class="bg-white rounded-lg p-3 font-mono text-xs text-green-800">
+            "value": <strong>49.99</strong>  &larr; aprobado
+          </div>
+        </div>
+        <div class="bg-red-50 border border-red-200 rounded-xl p-5">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined text-red-500">cancel</span>
+            <h3 class="font-semibold text-sm text-red-800">Pago RECHAZADO</h3>
+          </div>
+          <p class="text-sm text-red-700 mb-2">Envia un monto <strong>igual o mayor</strong> al umbral configurado.</p>
+          <div class="bg-white rounded-lg p-3 font-mono text-xs text-red-800">
+            "value": <strong>50.00</strong>  &larr; rechazado
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold text-sm mb-3">URLs de los ambientes</h3>
+          <div class="overflow-hidden rounded-xl border border-outline-variant/30">
+            <table class="w-full text-xs">
+              <thead class="bg-surface-container text-on-surface-variant">
+                <tr>
+                  <th class="px-4 py-2 text-left font-semibold">Ambiente</th>
+                  <th class="px-4 py-2 text-left font-semibold">URL</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/20">
+                <tr class="bg-surface-container-lowest">
+                  <td class="px-4 py-3"><span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2 py-0.5 rounded">QA</span></td>
+                  <td class="px-4 py-3 font-mono text-on-surface-variant break-all">qa-api.medianetpay.ec/app/webservice/webcheckout/rest</td>
+                </tr>
+                <tr class="bg-surface-container-lowest">
+                  <td class="px-4 py-3"><span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded">PROD</span></td>
+                  <td class="px-4 py-3 font-mono text-on-surface-variant break-all">api.medianetpay.ec:4443/app/webservice/webcheckout/rest</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="code-block p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">Cambiar de QA a Produccion</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre><span class="tok-kw">import</span> os
+
+URL_QA   = <span class="tok-str">"https://qa-api.medianetpay.ec/app/webservice/webcheckout/rest"</span>
+URL_PROD = <span class="tok-str">"https://api.medianetpay.ec:4443/app/webservice/webcheckout/rest"</span>
+
+<span class="tok-cmt"># Solo cambiar la URL. Todo lo demas es identico.</span>
+url = URL_QA <span class="tok-kw">if</span> os.getenv(<span class="tok-str">"ENV"</span>) == <span class="tok-str">"qa"</span> <span class="tok-kw">else</span> URL_PROD</pre>
+        </div>
+      </div>
+    </div>
+
+    <hr class="border-outline-variant/30"/>
+
+    <!-- ================================================================ PLUGINS ================================================================ -->
+    <div class="section-anchor" id="plugins">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-4">
+        <span class="material-symbols-outlined text-sm">extension</span>Plugins &amp; SDKs
+      </div>
+      <h2 class="text-2xl font-bold mb-2">Integra con tu CMS favorito</h2>
+      <p class="text-sm text-on-surface-variant mb-8">Plugins oficiales de MedianetPay listos para instalar. Sin codigo. Sin configuracion compleja.</p>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <!-- WooCommerce -->
+        <div class="plugin-card bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-white border border-outline-variant/30 flex items-center justify-center p-1.5"><img src="/plugins/woocommerce.png" alt="WooCommerce" class="w-full h-full object-contain"/></div>
+              <div>
+                <h3 class="font-bold">WooCommerce</h3>
+                <p class="text-xs text-on-surface-variant">WordPress / WooCommerce 5+</p>
+              </div>
+            </div>
+            <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Oficial</span>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-4">Plugin PHP de una sola instalacion. Soporta diferido, IVA y webhooks automaticos.</p>
+          <a href="/plugins/woocommerce_medianetpay.zip" download
+             class="flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
+            <span class="material-symbols-outlined text-base">download</span>Descargar plugin (.zip)
+          </a>
+        </div>
+
+        <!-- PrestaShop -->
+        <div class="plugin-card bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-white border border-outline-variant/30 flex items-center justify-center p-1.5"><img src="/plugins/prestashop.png" alt="PrestaShop" class="w-full h-full object-contain"/></div>
+              <div>
+                <h3 class="font-bold">PrestaShop</h3>
+                <p class="text-xs text-on-surface-variant">PrestaShop 1.7.8+</p>
+              </div>
+            </div>
+            <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Oficial</span>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-4">Modulo nativo de PrestaShop. Instalacion en 2 minutos desde el gestor de modulos.</p>
+          <a href="/plugins/prestashop_medianetpay.zip" download
+             class="flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
+            <span class="material-symbols-outlined text-base">download</span>Descargar plugin (.zip)
+          </a>
+        </div>
+
+        <!-- VirtueMart -->
+        <div class="plugin-card bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-white border border-outline-variant/30 flex items-center justify-center p-1.5"><img src="/plugins/virtuemart.png" alt="VirtueMart" class="w-full h-full object-contain"/></div>
+              <div>
+                <h3 class="font-bold">VirtueMart</h3>
+                <p class="text-xs text-on-surface-variant">Joomla + VirtueMart 3/4</p>
+              </div>
+            </div>
+            <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">Nuevo</span>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-4">Plugin <code class="text-xs bg-surface-container px-1 rounded">vmPSPlugin</code> nativo. Instalacion desde el Gestor de Extensiones de Joomla.</p>
+          <a href="/plugins/virtuemart_medianetpay_v1.0.0.zip" download
+             class="flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
+            <span class="material-symbols-outlined text-base">download</span>Descargar v1.0.0 (.zip)
+          </a>
+        </div>
+
+        <!-- OpenCart -->
+        <div class="plugin-card bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-white border border-outline-variant/30 flex items-center justify-center p-1.5"><img src="/plugins/opencart.png" alt="OpenCart" class="w-full h-full object-contain"/></div>
+              <div>
+                <h3 class="font-bold">OpenCart</h3>
+                <p class="text-xs text-on-surface-variant">OpenCart 3.x</p>
+              </div>
+            </div>
+            <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">Nuevo</span>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-4">Extension MVC completa con panel de admin. Mapeo de estados de orden configurable.</p>
+          <a href="/plugins/opencart_medianetpay_v1.0.0.zip" download
+             class="flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
+            <span class="material-symbols-outlined text-base">download</span>Descargar v1.0.0 (.zip)
+          </a>
+        </div>
+        <!-- Magento -->
+        <div class="plugin-card bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-white border border-outline-variant/30 flex items-center justify-center p-1.5"><img src="/plugins/magento.png" alt="Magento" class="w-full h-full object-contain"/></div>
+              <div>
+                <h3 class="font-bold">Magento</h3>
+                <p class="text-xs text-on-surface-variant">Magento 1.9</p>
+              </div>
+            </div>
+            <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Oficial</span>
+          </div>
+          <p class="text-sm text-on-surface-variant mb-4">Modulo nativo para Magento 1.9. Integracion completa con el checkout de Magento.</p>
+          <a href="/plugins/magento_medianetpay.zip" download
+             class="flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
+            <span class="material-symbols-outlined text-base">download</span>Descargar plugin (.zip)
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-6 bg-surface-container-low border border-outline-variant/30 rounded-xl p-5 flex items-start gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant mt-0.5">code</span>
+        <div>
+          <p class="text-sm font-semibold mb-1">Integracion personalizada</p>
+          <p class="text-sm text-on-surface-variant">Si usas otro CMS o un sistema propio, usa directamente la API REST documentada arriba. Compatible con cualquier lenguaje que soporte HTTP POST con JSON.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="border-outline-variant/30"/>
+
+    <!-- ================================================================ FIELDS ================================================================ -->
+    <div class="section-anchor" id="fields">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-4">
+        <span class="material-symbols-outlined text-sm">list_alt</span>Referencia de campos
+      </div>
+      <h2 class="text-2xl font-bold mb-6">Campos del request</h2>
+      <div class="overflow-hidden rounded-2xl border border-outline-variant/30">
+        <table class="w-full text-sm">
+          <thead class="bg-surface-container text-on-surface-variant">
+            <tr>
+              <th class="px-5 py-3 text-left font-semibold">Campo</th>
+              <th class="px-5 py-3 text-left font-semibold">Tipo</th>
+              <th class="px-5 py-3 text-left font-semibold">Max</th>
+              <th class="px-5 py-3 text-left font-semibold">Descripcion</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/20">
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">username</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">30</td>
+              <td class="px-5 py-3 text-xs">Correo de acceso a MedianetPay <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">key_webservice</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">36</td>
+              <td class="px-5 py-3 text-xs">Llave de autenticacion de la API <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">reference</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">40</td>
+              <td class="px-5 py-3 text-xs">ID unico de tu orden. Lo recibiras en el webhook <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">currency</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">3</td>
+              <td class="px-5 py-3 text-xs">Solo <code class="bg-surface-container px-1 rounded">"USD"</code> <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">value</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">Numerico</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">—</td>
+              <td class="px-5 py-3 text-xs">Monto total con IVA incluido <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">value_base_not_iva</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">Numerico</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">—</td>
+              <td class="px-5 py-3 text-xs">Monto sin IVA. Formula: <code class="bg-surface-container px-1 rounded text-xs">value / 1.15</code>. Puede ser 0 <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">iva</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">Numerico</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">99</td>
+              <td class="px-5 py-3 text-xs">Porcentaje de IVA. Ecuador: <code class="bg-surface-container px-1 rounded text-xs">15</code> <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">description</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">200</td>
+              <td class="px-5 py-3 text-xs">Descripcion visible para el cliente en la pagina de pago <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">url_back</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">URL</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">500</td>
+              <td class="px-5 py-3 text-xs">Endpoint de tu servidor que recibe el resultado (POST JSON). Debe ser publico <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-primary">url_redirect</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">URL</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">500</td>
+              <td class="px-5 py-3 text-xs">URL a la que el cliente es redirigido al terminar el pago <span class="field-required ml-1">requerido</span></td>
+            </tr>
+            <tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-secondary">person_data</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">Objeto</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">—</td>
+              <td class="px-5 py-3 text-xs">Datos del comprador (mejora aprobacion) <span class="field-optional ml-1">opcional</span></td>
+            </tr>
+            <tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-secondary pl-8">person_name</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">—</td>
+              <td class="px-5 py-3 text-xs">Nombre del comprador <span class="field-optional ml-1">opcional</span></td>
+            </tr>
+            <tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-secondary pl-8">person_lastname</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">—</td>
+              <td class="px-5 py-3 text-xs">Apellido del comprador <span class="field-optional ml-1">opcional</span></td>
+            </tr>
+            <tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-secondary pl-8">person_email</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">—</td>
+              <td class="px-5 py-3 text-xs">Email del comprador <span class="field-optional ml-1">opcional</span></td>
+            </tr>
+            <tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-secondary pl-8">person_document</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">—</td>
+              <td class="px-5 py-3 text-xs">Cedula, RUC o pasaporte <span class="field-optional ml-1">opcional</span></td>
+            </tr>
+            <tr class="bg-surface-container-low hover:bg-surface-container transition-colors">
+              <td class="px-5 py-3 font-mono text-xs text-secondary pl-8">person_document_type</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">String</td>
+              <td class="px-5 py-3 text-xs text-on-surface-variant">—</td>
+              <td class="px-5 py-3 text-xs"><code class="bg-surface-container px-1 rounded text-xs">CC</code> Cedula · <code class="bg-surface-container px-1 rounded text-xs">CE</code> Ext. · <code class="bg-surface-container px-1 rounded text-xs">PP</code> Pasaporte · <code class="bg-surface-container px-1 rounded text-xs">RUC</code> <span class="field-optional ml-1">opcional</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr class="border-outline-variant/30"/>
+
+    <!-- ================================================================ ERRORS ================================================================ -->
+    <div class="section-anchor" id="errors">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-4">
+        <span class="material-symbols-outlined text-sm">error</span>Manejo de errores
+      </div>
+      <h2 class="text-2xl font-bold mb-6">Errores comunes y como resolverlos</h2>
+
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div class="space-y-3">
+          <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <code class="text-xs font-mono font-bold text-red-700">Credenciales invalidas</code>
+            </div>
+            <p class="text-xs text-red-700">El <code>username</code> o <code>key_webservice</code> son incorrectos o la llave fue regenerada. Verifica en el portal y regenera si es necesario.</p>
+          </div>
+          <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <code class="text-xs font-mono font-bold text-red-700">SSL no valido</code>
+            </div>
+            <p class="text-xs text-red-700">Tu <code>url_back</code> o <code>url_redirect</code> deben usar HTTPS con un certificado SSL valido (no autofirmado). MedianetPay no entrega a HTTP ni SSL invalido.</p>
+          </div>
+          <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <code class="text-xs font-mono font-bold text-red-700">reference duplicada</code>
+            </div>
+            <p class="text-xs text-red-700">La <code>reference</code> ya fue usada. Cada pago debe tener una referencia unica. Agrega timestamp o UUID si es necesario.</p>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <code class="text-xs font-mono font-bold text-amber-700">Timeout del request</code>
+            </div>
+            <p class="text-xs text-amber-700">Configura timeout de al menos 30 segundos al llamar a la API. En horas pico puede tardar mas. Implementa reintentos con backoff exponencial.</p>
+          </div>
+        </div>
+        <div class="code-block p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-white/80 text-xs font-mono font-semibold bg-white/10 px-2 py-0.5 rounded">Manejo robusto de errores (Python)</span>
+            <button onclick="copyCode(this)" title="Copiar" class="copy-btn flex items-center gap-1 text-white/40 hover:text-white transition-colors text-xs">
+              <span class="material-symbols-outlined" style="font-size:15px">content_copy</span>
+            </button>
+          </div>
+<pre><span class="tok-kw">import</span> requests
+
+<span class="tok-kw">def</span> <span class="tok-fn">crear_pago</span>(payload: dict) -> str:
+    <span class="tok-kw">try</span>:
+        res = requests.<span class="tok-fn">post</span>(
+            URL,
+            json=payload,
+            timeout=<span class="tok-num">30</span>
+        )
+        res.<span class="tok-fn">raise_for_status</span>()
+
+        data = res.<span class="tok-fn">json</span>()
+
+        <span class="tok-kw">if</span> <span class="tok-str">"link"</span> <span class="tok-kw">not in</span> data:
+            <span class="tok-kw">raise</span> <span class="tok-fn">ValueError</span>(
+                data.<span class="tok-fn">get</span>(<span class="tok-str">"message"</span>, <span class="tok-str">"Respuesta inesperada"</span>)
+            )
+
+        <span class="tok-kw">return</span> data[<span class="tok-str">"link"</span>]
+
+    <span class="tok-kw">except</span> requests.exceptions.Timeout:
+        <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">"API no responde. Reintentar."</span>)
+
+    <span class="tok-kw">except</span> requests.exceptions.HTTPError <span class="tok-kw">as</span> e:
+        <span class="tok-kw">raise</span> <span class="tok-fn">RuntimeError</span>(<span class="tok-str">f"Error HTTP: {e.response.status_code}"</span>)
+
+    <span class="tok-kw">except</span> <span class="tok-fn">Exception</span> <span class="tok-kw">as</span> e:
+        logger.<span class="tok-fn">error</span>(<span class="tok-str">f"Error creando pago: {e}"</span>)
+        <span class="tok-kw">raise</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA final -->
+    <div class="bg-deep-navy rounded-3xl p-10 text-center text-white">
+      <h2 class="text-3xl font-black mb-3">Listo para aceptar pagos?</h2>
+      <p class="text-white/70 mb-6">Crea tu cuenta gratuita y empieza en QA hoy mismo. Sin tarjeta de credito.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/register" class="bg-white text-deep-navy font-bold px-8 py-3 rounded-xl hover:bg-surface-container-low transition-colors">
+          Crear cuenta gratis
+        </a>
+        <a href="mailto:soporte@medianetpay.ec" target="_blank" class="bg-white/10 border border-white/20 text-white font-bold px-8 py-3 rounded-xl hover:bg-white/20 transition-colors">
+          Hablar con soporte
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ============================================================ FOOTER ============================================================ -->
+<footer class="bg-surface-container-lowest text-on-surface py-8 border-t border-outline-variant/20">
+  <div class="max-w-6xl mx-auto px-5 md:px-16 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div class="space-y-4">
+      <img alt="MedianetPay" class="h-8" src="/logo.png"/>
+      <p class="text-xs text-on-surface-variant leading-relaxed">
+        MedianetPay es el procesador lider de <span style="color:#F89937">Ecuador</span>, brindando tecnologia de clase mundial a negocios de todos los tamanos.
+      </p>
+    </div>
+    <div class="space-y-4">
+      <h5 class="font-bold text-deep-navy text-sm">Producto</h5>
+      <ul class="space-y-2 text-sm text-on-surface-variant">
+        <li><a href="landing.html" class="hover:text-primary transition-colors">Servicios</a></li>
+        <li><a href="landing.html" class="hover:text-primary transition-colors">Precios</a></li>
+        <li><a href="landing.html" class="hover:text-primary transition-colors">Links de Pago</a></li>
+        <li><a href="landing.html" class="hover:text-primary transition-colors">Botones de Pago</a></li>
+      </ul>
+    </div>
+    <div class="space-y-4">
+      <h5 class="font-bold text-deep-navy text-sm">Desarrolladores</h5>
+      <ul class="space-y-2 text-sm text-on-surface-variant">
+        <li><a href="#quickstart" class="hover:text-primary transition-colors">Documentacion</a></li>
+        <li><a href="#create-payment" class="hover:text-primary transition-colors">API Reference</a></li>
+        <li><a href="#plugins" class="hover:text-primary transition-colors">Plugins</a></li>
+        <li><a href="https://qa-api.medianetpay.ec/app/swagger-ui/index.html" target="_blank" class="hover:text-primary transition-colors">Swagger QA</a></li>
+      </ul>
+    </div>
+    <div class="space-y-4">
+      <h5 class="font-bold text-deep-navy text-sm">Legal</h5>
+      <ul class="space-y-2 text-sm text-on-surface-variant">
+        <li><a href="#" class="hover:text-primary transition-colors">Privacidad</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors">Terminos</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors">Seguridad</a></li>
+        <li><a href="mailto:soporte@medianetpay.ec" class="hover:text-primary transition-colors">Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-5 md:px-16 mt-8 pt-6 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-2">
+    <p class="text-xs text-on-surface-variant">&copy; 2026 MedianetPay. Todos los derechos reservados.</p>
+    <p class="text-xs text-on-surface-variant">Certificado PCI DSS · Regulado por el Banco Central del Ecuador</p>
+  </div>
+</footer>
+
+<script>
+// Copy code button
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  const icon = btn.querySelector('.material-symbols-outlined');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    icon.textContent = 'check';
+    icon.style.color = '#3fb950';
+    setTimeout(() => {
+      icon.textContent = 'content_copy';
+      icon.style.color = '';
+    }, 1600);
+  });
+}
+
+// Tab switcher
+function showTab(id) {
+  document.querySelectorAll('.code-tab').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'bg-primary', 'text-white'));
+  const target = document.getElementById('content-' + id);
+  if (target) target.classList.remove('hidden');
+  const btn = document.getElementById('tab-' + id);
+  if (btn) btn.classList.add('active');
+}
+
+// Active sidebar link on scroll
+const sections = document.querySelectorAll('.section-anchor');
+const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        link.classList.add('text-on-surface-variant');
+        if (link.getAttribute('href') === '#' + id) {
+          link.classList.add('active');
+          link.classList.remove('text-on-surface-variant');
+        }
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

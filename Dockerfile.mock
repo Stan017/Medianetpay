@@ -1,0 +1,14 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Dockerfile.mock — Mock del servidor MediaNet (solo para desarrollo local)
+# Single-stage: no va a producción, no necesita optimización de imagen.
+# ─────────────────────────────────────────────────────────────────────────────
+FROM python:3.12-slim
+
+RUN pip install --no-cache-dir fastapi uvicorn httpx
+
+WORKDIR /app
+COPY mock_medianet/ ./mock_medianet/
+
+EXPOSE 9000
+
+CMD ["uvicorn", "mock_medianet.server:app", "--host", "0.0.0.0", "--port", "9000"]

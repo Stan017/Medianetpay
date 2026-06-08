@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
+    <name>MedianetPay Payment</name>
+    <author>MedianetPay</author>
+    <creationDate>2025</creationDate>
+    <copyright>MedianetPay</copyright>
+    <license>GPL v2</license>
+    <authorEmail>soporte@medianetpay.ec</authorEmail>
+    <authorUrl>https://www.medianetpay.ec</authorUrl>
+    <version>1.0.0</version>
+    <description>Pasarela de pagos MedianetPay para VirtueMart. Permite cobrar con tarjetas Visa, Mastercard y UnionPay.</description>
+
+    <files>
+        <filename plugin="medianetpay">medianetpay.php</filename>
+        <filename>confirmation.php</filename>
+        <filename>response.php</filename>
+        <folder>tmpl</folder>
+        <folder>img</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+
+                <field name="username"
+                       type="text"
+                       label="Usuario MedianetPay"
+                       description="Su usuario de la plataforma MedianetPay."
+                       size="40"
+                       default="" />
+
+                <field name="key_webservice"
+                       type="text"
+                       label="Llave Webservice"
+                       description="Llave generada en: Configuracion -> Seguridad Webservice -> Llave Webservice."
+                       size="60"
+                       default="" />
+
+                <field name="sandbox"
+                       type="list"
+                       label="Ambiente"
+                       description="Seleccione QA para pruebas o Produccion para cobros reales."
+                       default="1">
+                    <option value="1">QA / Pruebas</option>
+                    <option value="0">Produccion</option>
+                </field>
+
+                <field name="iva"
+                       type="text"
+                       label="Porcentaje IVA"
+                       description="Porcentaje de IVA aplicado en Ecuador (15)."
+                       size="5"
+                       default="15" />
+
+            </fieldset>
+        </fields>
+    </config>
+
+    <languages>
+        <language tag="es-ES">languages/es-ES.plg_vmpayment_medianetpay.ini</language>
+        <language tag="en-GB">languages/en-GB.plg_vmpayment_medianetpay.ini</language>
+    </languages>
+</extension>

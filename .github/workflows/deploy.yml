@@ -1,0 +1,115 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# deploy.yml — CI/CD MediaNetPay → GCP Cloud Run
+#
+# Se dispara en cada push a `main`.
+# Flujo:
+#   1. Build imagen Docker del backend
+#   2. Push a Artifact Registry (registro privado de GCP)
+#   3. Deploy a Cloud Run
+#
+# Secrets de GitHub que debes configurar en:
+#   GitHub repo → Settings → Secrets and variables → Actions → New secret
+#
+#   GCP_PROJECT_ID      → ID de tu proyecto GCP (ej: medianetpay-prod)
+#   GCP_SA_KEY          → JSON del service account (en base64)
+#   GCP_REGION          → Región (ej: us-central1)
+#   GCP_AR_REPO         → Nombre del repo en Artifact Registry (ej: medianetpay)
+#
+#   — Variables de entorno del backend en producción —
+#   SECRET_KEY          → Clave secreta JWT (genera con: openssl rand -hex 32)
+#   DATABASE_URL        → URL de Supabase (postgresql+asyncpg://...)
+#   REDIS_URL           → URL de Upstash Redis (redis://...)
+#   MEDIANET_API_URL    → URL real del API MediaNet
+#   MEDIANET_API_KEY    → Key del API MediaNet
+#   MEDIANET_API_SECRET → Secret del API MediaNet
+#   PORTAL_BASE_URL     → URL del portal Next.js (https://medianetpay.ec)
+#   API_BASE_URL        → URL de este mismo servicio en Cloud Run
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:    # permite disparar manualmente desde GitHub UI
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write   # necesario para autenticación con GCP
+
+    steps:
+      # ── 1. Checkout ─────────────────────────────────────────────────────────
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      # ── 2. Autenticar con GCP ───────────────────────────────────────────────
+      - name: Autenticar en GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      # ── 3. Configurar Cloud SDK ─────────────────────────────────────────────
+      - name: Configurar gcloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      # ── 4. Configurar Docker para Artifact Registry ─────────────────────────
+      - name: Configurar Docker → Artifact Registry
+        run: |
+          gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
+
+      # ── 5. Build y Push de la imagen ────────────────────────────────────────
+      - name: Build imagen Docker
+        env:
+          IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_AR_REPO }}/api
+        run: |
+          docker build \
+            --tag $IMAGE:${{ github.sha }} \
+            --tag $IMAGE:latest \
+            .
+
+      - name: Push imagen a Artifact Registry
+        env:
+          IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_AR_REPO }}/api
+        run: |
+          docker push $IMAGE:${{ github.sha }}
+          docker push $IMAGE:latest
+
+      # ── 6. Deploy a Cloud Run ───────────────────────────────────────────────
+      - name: Deploy a Cloud Run
+        env:
+          IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_AR_REPO }}/api
+        run: |
+          gcloud run deploy medianetpay-api \
+            --image $IMAGE:${{ github.sha }} \
+            --region ${{ secrets.GCP_REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 8080 \
+            --memory 512Mi \
+            --cpu 1 \
+            --min-instances 0 \
+            --max-instances 3 \
+            --timeout 60 \
+            --set-env-vars "APP_ENV=production" \
+            --set-env-vars "SECRET_KEY=${{ secrets.SECRET_KEY }}" \
+            --set-env-vars "DATABASE_URL=${{ secrets.DATABASE_URL }}" \
+            --set-env-vars "REDIS_URL=${{ secrets.REDIS_URL }}" \
+            --set-env-vars "MEDIANET_API_URL=${{ secrets.MEDIANET_API_URL }}" \
+            --set-env-vars "MEDIANET_API_KEY=${{ secrets.MEDIANET_API_KEY }}" \
+            --set-env-vars "MEDIANET_API_SECRET=${{ secrets.MEDIANET_API_SECRET }}" \
+            --set-env-vars "PORTAL_BASE_URL=${{ secrets.PORTAL_BASE_URL }}" \
+            --set-env-vars "API_BASE_URL=${{ secrets.API_BASE_URL }}"
+
+      # ── 7. Mostrar URL del servicio desplegado ──────────────────────────────
+      - name: URL del servicio
+        run: |
+          gcloud run services describe medianetpay-api \
+            --region ${{ secrets.GCP_REGION }} \
+            --format "value(status.url)"

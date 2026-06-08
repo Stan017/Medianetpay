@@ -1,0 +1,76 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# .dockerignore — MediaNetPay backend
+#
+# Solo entra al contexto de build lo que el Dockerfile necesita:
+#   app/  migrations/  alembic.ini  static/  pyproject.toml
+#
+# Todo lo demás se excluye: reduce el contexto (builds más rápidos en CI/CD)
+# y evita filtrar credenciales o código innecesario a la imagen.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Credenciales y config local (NUNCA en la imagen) ─────────────────────────
+.env
+.env.*
+*.env
+cookies.txt
+test_cookies.txt
+
+# ── Git ───────────────────────────────────────────────────────────────────────
+.git/
+.gitignore
+
+# ── Código que no es el backend ───────────────────────────────────────────────
+app-mobile/
+portal/
+frontend/
+integrations/
+supabase/
+# mock_medianet/ NO se excluye — lo necesita Dockerfile.mock
+# No entra en la imagen del backend igual porque el Dockerfile no lo copia
+Docs/
+scripts/
+info/
+
+# ── Tests ─────────────────────────────────────────────────────────────────────
+tests/
+.pytest_cache/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+
+# ── Entornos virtuales Python ─────────────────────────────────────────────────
+.venv/
+venv/
+env/
+.virtualenv/
+
+# ── Node (por si acaso se corrió npm en la raíz) ──────────────────────────────
+node_modules/
+.npm/
+
+# ── Scripts de desarrollo Windows ────────────────────────────────────────────
+*.bat
+start.bat
+
+# ── Archivos de prueba / datos temporales ────────────────────────────────────
+*.json
+192.168.1.*
+uvicorn_*.txt
+
+# ── Docker (no necesita incluirse en el contexto) ────────────────────────────
+Dockerfile
+Dockerfile.mock
+.dockerignore
+docker-compose*.yml
+
+# ── Documentación e instrucciones del proyecto ───────────────────────────────
+CLAUDE.md
+*.md
+
+# ── IDEs y SO ────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db

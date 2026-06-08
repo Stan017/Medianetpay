@@ -1,0 +1,66 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# docker-compose.yml — MediaNetPay (entorno local con contenedores)
+#
+# Uso:
+#   docker compose up          → levanta todo en foreground
+#   docker compose up -d       → levanta en background
+#   docker compose down        → apaga y elimina contenedores
+#   docker compose logs -f api → ver logs del backend en tiempo real
+#
+# Servicios:
+#   api   → Backend FastAPI  (puerto 8000 → 8080 interno)
+#   mock  → Mock MediaNet    (puerto 9000)
+#
+# Base de datos y Redis NO están aquí — se usan los servicios cloud:
+#   DB    → Supabase (ya configurado en .env)
+#   Redis → Upstash  (configurar REDIS_URL en .env cuando tengas la cuenta)
+#
+# NOTA — Limitación en Windows:
+#   Supabase solo expone IPv6. Docker Desktop en Windows (WSL2) no rutea IPv6
+#   a internet, por lo que `docker compose up` no puede conectar a Supabase.
+#   Para desarrollo local en Windows usar los bat files (_start_backend.bat).
+#   Este archivo está pensado para CI/CD en Linux (GitHub Actions → GCP Cloud Run)
+#   donde IPv6 funciona correctamente.
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── Backend FastAPI ──────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: medianetpay-api:local
+    container_name: medianetpay-api
+    ports:
+      - "8000:8080"       # tu PC escucha en 8000, el contenedor internamente usa 8080
+    env_file:
+      - .env              # tus variables locales — nunca se commitean
+    environment:
+      # Sobreescribe solo lo que cambia dentro del contenedor
+      APP_ENV: development
+      MEDIANET_API_URL: http://mock:9000   # el mock corre como servicio "mock" en esta red
+    depends_on:
+      - mock
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s   # da tiempo a que alembic upgrade head termine
+
+  # ── Mock MediaNet ────────────────────────────────────────────────────────────
+  mock:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    container_name: medianetpay-mock
+    ports:
+      - "9000:9000"
+    restart: unless-stopped
+
+# Red interna para que api y mock se comuniquen por nombre de servicio
+networks:
+  default:
+    name: medianetpay-network
