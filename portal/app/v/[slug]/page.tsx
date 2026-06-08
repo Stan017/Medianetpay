@@ -151,7 +151,7 @@ export default async function VitrinaPage({
         <p className="text-xs text-gray-400">
           ¿Eres comerciante?{" "}
           <a href="/register" className="text-[#F89937] font-medium hover:underline">
-            Crea tu vitrina gratis
+            Registra Gratis!
           </a>
         </p>
       </div>
