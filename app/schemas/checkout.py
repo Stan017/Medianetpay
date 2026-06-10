@@ -8,7 +8,7 @@ class PublicChargeRequest(BaseModel):
     Ya no se recogen datos de tarjeta — el pago ocurre en la página hosted de MediaNet.
     """
     amount: Decimal | None = Field(
-        default=None, gt=0,
+        default=None, gt=0, le=Decimal("50000"),
         description="Requerido solo si el link no tiene monto fijo."
     )
     customer_email: str | None = Field(default=None, max_length=100)

@@ -68,7 +68,14 @@ jobs:
         run: |
           gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
 
-      # ── 5. Build y Push de la imagen ────────────────────────────────────────
+      # ── 5. Auditoría de dependencias Python (CVEs conocidos) ────────────────
+      - name: Auditoría de seguridad de dependencias
+        continue-on-error: true
+        run: |
+          pip install pip-audit
+          pip-audit --project pyproject.toml --progress-spinner off
+
+      # ── 6. Build y Push de la imagen ────────────────────────────────────────
       - name: Build imagen Docker
         env:
           IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_AR_REPO }}/api
@@ -101,7 +108,7 @@ jobs:
             --min-instances 0 \
             --max-instances 3 \
             --timeout 60 \
-            --set-env-vars "APP_ENV=staging" \
+            --set-env-vars "APP_ENV=production" \
             --set-env-vars "SECRET_KEY=${{ secrets.SECRET_KEY }}" \
             --set-env-vars "DATABASE_URL=${{ secrets.DATABASE_URL }}" \
             --set-env-vars "REDIS_URL=${{ secrets.REDIS_URL }}" \

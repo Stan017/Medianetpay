@@ -16,6 +16,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db
 from app.models.merchant import Merchant
+from app.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 async def _resolve_merchant(api_key: str, db: AsyncSession) -> Merchant:
@@ -39,8 +42,8 @@ async def _resolve_merchant(api_key: str, db: AsyncSession) -> Merchant:
             try:
                 if bcrypt.checkpw(api_key.encode(), candidate.api_key_secret_hash.encode()):
                     return candidate
-            except Exception:
-                pass
+            except Exception as exc:
+                logger.error("bcrypt checkpw failed", merchant=candidate.id, error=str(exc))
 
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,

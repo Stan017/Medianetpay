@@ -3,18 +3,21 @@ Endpoints públicos — sin autenticación.
 GET /v1/public/vitrina/{slug} — datos de la vitrina para la página pública.
 """
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db
 from app.modules.catalog import service as catalog_service
 from app.schemas.catalog import PublicServiceOut, PublicVitrinaOut
+from app.utils.rate_limiter import limiter
 
 router = APIRouter(prefix="/v1/public", tags=["Público"])
 
 
 @router.get("/vitrina/{slug}", response_model=PublicVitrinaOut)
+@limiter.limit("60/minute")
 async def get_public_vitrina(
+    request: Request,
     slug: str,
     db: AsyncSession = Depends(get_db),
 ) -> PublicVitrinaOut:

@@ -6,14 +6,18 @@ POST /pay/{token}/charge    → crea txn pending, obtiene link de MediaNet, devu
 GET  /payment-result        → página de resultado final (success/pending/failed)
 """
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
-from fastapi.responses import HTMLResponse, JSONResponse
+import html
+import json
+
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi.responses import HTMLResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db
 from app.modules.links.service import get_link_by_token
 from app.modules.links.checkout_service import public_charge
 from app.schemas.checkout import PublicChargeRequest, PublicChargeResponse
+from app.utils.rate_limiter import limiter
 
 router = APIRouter(tags=["Checkout Público"])
 
@@ -21,7 +25,9 @@ router = APIRouter(tags=["Checkout Público"])
 # ── Página principal de checkout ──────────────────────────────────────────────
 
 @router.get("/pay/{token}", response_class=HTMLResponse, include_in_schema=False)
+@limiter.limit("60/minute")
 async def checkout_page(
+    request: Request,
     token: str,
     db: AsyncSession = Depends(get_db),
 ) -> HTMLResponse:
@@ -51,11 +57,12 @@ async def checkout_page(
         if is_test else ""
     )
 
+    safe_desc = html.escape(link.description)
     if has_fixed_amount:
         # Header con monto fijo grande
         header_content = f"""
     <div class="header-badge">🔒 Pago seguro · MediaNetPay</div>
-    <div class="header-desc">{link.description}</div>
+    <div class="header-desc">{safe_desc}</div>
     <div class="header-amount"><span>$</span>{link.amount:.2f}</div>
     <div class="header-currency">{link.currency}</div>"""
         # Campo de monto: no se muestra (fijo)
@@ -65,7 +72,7 @@ async def checkout_page(
         # Header sin monto — el cliente lo elige
         header_content = f"""
     <div class="header-badge">🔒 Pago seguro · MediaNetPay</div>
-    <div class="header-desc">{link.description}</div>
+    <div class="header-desc">{safe_desc}</div>
     <div class="header-free-label">¿Cuánto quieres pagar?</div>"""
         # Campo de monto prominente
         amount_field = """
@@ -84,7 +91,7 @@ async def checkout_page(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagar — {link.description}</title>
+  <title>Pagar — {safe_desc}</title>
   <style>
     *{{box-sizing:border-box;margin:0;padding:0}}
     body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}}
@@ -153,10 +160,10 @@ async def checkout_page(
 </div>
 
 <script>
-  var TOKEN = '{token}';
+  var TOKEN = {json.dumps(token)};
   var FIXED_AMOUNT = {fixed_amount_js};
   var EMBED_MODE = (new URLSearchParams(window.location.search)).get('mode') === 'embed';
-  var DEFAULT_BTN = '{initial_btn_label}';
+  var DEFAULT_BTN = {json.dumps(initial_btn_label)};
 
   function showAlert(msg) {{
     var el = document.getElementById('alert');
@@ -272,7 +279,7 @@ def _render_result_page(result: str, txn_id: str | None) -> HTMLResponse:
     else:
         icon, title, subtitle, color = "⏳", "Pago en proceso", "Estamos verificando tu pago. Recibirás una confirmación pronto.", "#d97706"
 
-    ref = f'<p style="font-size:12px;color:#9ca3af;margin-top:8px;font-family:monospace">{txn_id}</p>' if txn_id else ""
+    ref = f'<p style="font-size:12px;color:#9ca3af;margin-top:8px;font-family:monospace">{html.escape(txn_id)}</p>' if txn_id else ""
     html = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -317,7 +324,9 @@ h2{{color:#dc2626;margin-bottom:8px}}p{{color:#6b7280;font-size:14px}}</style></
     response_model=PublicChargeResponse,
     status_code=status.HTTP_200_OK,
 )
+@limiter.limit("10/minute")
 async def checkout_charge(
+    request: Request,
     token: str,
     body: PublicChargeRequest,
     db: AsyncSession = Depends(get_db),

@@ -10,9 +10,11 @@ El comercio verifica la firma con su webhook_secret antes de procesar.
 
 import hashlib
 import hmac
+import ipaddress
 import json
 import time
 from datetime import datetime, timezone
+from urllib.parse import urlparse
 
 import httpx
 
@@ -20,6 +22,25 @@ from app.models.merchant import Merchant
 from app.utils.logger import get_logger
 
 logger = get_logger(__name__)
+
+
+def _is_safe_url(url: str) -> bool:
+    try:
+        parsed = urlparse(url)
+        host = (parsed.hostname or "").lower()
+        if not host:
+            return False
+        if host in {"localhost", "0.0.0.0", "metadata.google.internal"}:
+            return False
+        if host.endswith(".internal") or host.endswith(".local"):
+            return False
+        try:
+            addr = ipaddress.ip_address(host)
+            return not (addr.is_private or addr.is_loopback or addr.is_link_local or addr.is_reserved)
+        except ValueError:
+            return True
+    except Exception:
+        return False
 
 
 def _sign_payload(payload: dict, secret: str) -> str:
@@ -35,6 +56,9 @@ async def send_test_webhook(merchant: Merchant) -> dict:
     """Dispara un webhook de prueba al URL configurado por el comercio."""
     if not merchant.webhook_url:
         return {"sent": False, "reason": "El comercio no tiene webhook_url configurada"}
+    if not _is_safe_url(merchant.webhook_url):
+        logger.warning("webhook: URL bloqueada por SSRF guard", merchant=merchant.id)
+        return {"sent": False, "reason": "webhook_url apunta a una dirección no permitida"}
 
     payload = {
         "event": "test.ping",
@@ -91,6 +115,9 @@ async def send_charge_webhook(merchant: Merchant, transaction: object) -> None:
 async def fire_charge_webhook(merchant: Merchant, transaction: dict) -> None:
     """Dispara el webhook de cobro completado. Fase 5: mover a Celery queue."""
     if not merchant.webhook_url:
+        return
+    if not _is_safe_url(merchant.webhook_url):
+        logger.warning("webhook: URL bloqueada por SSRF guard", merchant=merchant.id)
         return
 
     payload = {

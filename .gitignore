@@ -19,3 +19,16 @@ Docs/*.pdf
 *_body.json
 cookies.txt
 test_cookies.txt
+
+# Credenciales y certificados
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cert
+*.der
+*.jks
+*.keystore
+secrets/
+credentials/

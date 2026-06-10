@@ -7,8 +7,6 @@ Rate limiting en memoria (fallback cuando Redis no está disponible).
 
 from __future__ import annotations
 
-import time
-from collections import defaultdict
 from typing import Literal
 
 import anthropic
@@ -22,27 +20,6 @@ logger = get_logger(__name__)
 MODEL = "claude-3-5-haiku-20241022"
 MAX_TOKENS = 512
 MAX_HISTORY_TURNS = 10   # máximo de turnos que enviamos a Claude (para no explotar el contexto)
-
-# ── Rate limiting en memoria ──────────────────────────────────────────────────
-# {ip: [timestamp_epoch, ...]}   — ventana deslizante de 1 hora
-_rate_store: dict[str, list[float]] = defaultdict(list)
-RATE_LIMIT   = 30          # mensajes por hora por IP
-RATE_WINDOW  = 3600.0      # segundos
-
-def _check_rate_limit(ip: str) -> bool:
-    """
-    Retorna True si la IP puede enviar otro mensaje.
-    Limpia timestamps viejos en cada llamada.
-    """
-    now = time.monotonic()
-    cutoff = now - RATE_WINDOW
-    bucket = _rate_store[ip]
-    # Limpiar timestamps fuera de la ventana
-    _rate_store[ip] = [t for t in bucket if t > cutoff]
-    if len(_rate_store[ip]) >= RATE_LIMIT:
-        return False
-    _rate_store[ip].append(now)
-    return True
 
 
 # ── System prompt (cacheado por Anthropic — se envía con cache_control) ───────
@@ -159,7 +136,6 @@ class ChatMessage:
 async def annie_reply(
     user_message: str,
     history: list[dict[str, str]],
-    client_ip: str,
 ) -> str:
     """
     Genera la respuesta de Annie al mensaje del usuario.
@@ -176,16 +152,13 @@ async def annie_reply(
         ValueError: Rate limit excedido.
         RuntimeError: API key no configurada.
     """
-    if not _check_rate_limit(client_ip):
-        raise ValueError("Has enviado demasiados mensajes. Por favor espera un momento.")
-
     client = _get_client()
 
     # Limitar historial para no exceder contexto
     trimmed = history[-(MAX_HISTORY_TURNS * 2):]  # *2 porque cada turno = 2 mensajes
     messages = [*trimmed, {"role": "user", "content": user_message}]
 
-    logger.info("annie_chat", ip=client_ip, history_len=len(trimmed))
+    logger.info("annie_chat", history_len=len(trimmed))
 
     response = await client.messages.create(
         model=MODEL,

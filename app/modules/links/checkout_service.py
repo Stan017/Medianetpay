@@ -58,6 +58,13 @@ async def public_charge(
     if charge_amount is None:
         raise ValueError("Este link requiere que ingreses un monto")
 
+    _MIN = Decimal("0.01")
+    _MAX = Decimal("50000.00")
+    if charge_amount < _MIN:
+        raise ValueError("El monto mínimo es $0.01")
+    if charge_amount > _MAX:
+        raise ValueError("El monto máximo permitido es $50,000.00")
+
     merchant: Merchant | None = await db.get(Merchant, link.merchant_id)
     if not merchant or merchant.status != "active":
         raise ValueError("Comercio no disponible")
@@ -97,10 +104,7 @@ async def public_charge(
         txn.extra_data = {**(txn.extra_data or {}), "uses_counted": True}
         await db.commit()
 
-    logger.info(
-        "checkout: redirigiendo a MediaNet",
-        token=token, txn=txn.id, url=payment_url,
-    )
+    logger.info("checkout: redirigiendo a MediaNet", txn=txn.id)
 
     return {
         "transaction_id": txn.id,

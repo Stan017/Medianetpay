@@ -13,6 +13,7 @@ from pydantic import BaseModel, Field
 
 from app.modules.ai.chatbot import annie_reply
 from app.utils.logger import get_logger
+from app.utils.rate_limiter import limiter
 
 logger = get_logger(__name__)
 
@@ -38,9 +39,10 @@ class ChatResponse(BaseModel):
 # ── Endpoint ──────────────────────────────────────────────────────────────────
 
 @router.post("", response_model=ChatResponse)
+@limiter.limit("30/hour")
 async def chat_endpoint(
-    body: ChatRequest,
     request: Request,
+    body: ChatRequest,
 ) -> ChatResponse:
     """
     Envía un mensaje a Annie y recibe la respuesta.
@@ -48,26 +50,12 @@ async def chat_endpoint(
     - `message`: el último mensaje del usuario
     - `history`: historial de la conversación (sin incluir el mensaje actual)
     """
-    # Extraer IP real (considera proxies)
-    client_ip = (
-        request.headers.get("X-Forwarded-For", "").split(",")[0].strip()
-        or request.headers.get("X-Real-IP", "")
-        or (request.client.host if request.client else "unknown")
-    )
-
     history = [h.model_dump() for h in body.history]
 
     try:
         reply = await annie_reply(
             user_message=body.message,
             history=history,
-            client_ip=client_ip,
-        )
-    except ValueError as e:
-        # Rate limit
-        raise HTTPException(
-            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-            detail=str(e),
         )
     except RuntimeError as e:
         # API key no configurada u otro error de configuración
