@@ -108,7 +108,7 @@ jobs:
             --min-instances 0 \
             --max-instances 3 \
             --timeout 60 \
-            --set-env-vars "APP_ENV=production" \
+            --set-env-vars "APP_ENV=staging" \
             --set-env-vars "SECRET_KEY=${{ secrets.SECRET_KEY }}" \
             --set-env-vars "DATABASE_URL=${{ secrets.DATABASE_URL }}" \
             --set-env-vars "REDIS_URL=${{ secrets.REDIS_URL }}" \
