@@ -107,6 +107,7 @@ jobs:
             --set-env-vars "REDIS_URL=${{ secrets.REDIS_URL }}" \
             --set-env-vars "MEDIANET_API_URL=${{ secrets.MEDIANET_API_URL }}" \
             --set-env-vars "MEDIANET_API_KEY=${{ secrets.MEDIANET_API_KEY }}" \
+            --set-env-vars "MEDIANET_API_USERNAME=${{ secrets.MEDIANET_API_USERNAME }}" \
             --set-env-vars "MEDIANET_API_SECRET=${{ secrets.MEDIANET_API_SECRET }}" \
             --set-env-vars "PORTAL_BASE_URL=${{ secrets.PORTAL_BASE_URL }}" \
             --set-env-vars "API_BASE_URL=${{ secrets.API_BASE_URL }}"

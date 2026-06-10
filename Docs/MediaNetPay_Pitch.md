@@ -1,27 +1,27 @@
 # PROPUESTA ESTRATÉGICA — MediaNetPay
 **La pasarela de pagos ecommerce que Ecuador necesitaba**
 
-Preparado por: Stan Morocho | Para: Karina — MediaNet | Mayo 2026
+Preparado por: Stan Morocho | Para: Karina — MediaNet | Junio 2026
 
-> "El dominio medianetpay.ec no resuelve. Los productos están prometidos en la web pero no existe ningún backend. Esta es la oportunidad de construirlo bien, desde cero, en 10 semanas."
+> "El dominio medianetpay.ec existe, la marca está comunicada, los productos están prometidos — pero no hay nada detrás. Esta propuesta no solo identifica el problema: ya lo resuelve."
 
 ---
 
 ## 01 / EL PROBLEMA — La promesa existe. El producto no.
 
-MediaNet ofrece en su sitio web cinco productos de ecommerce bajo la marca MediaNetPay: Link de Cobro, Cobro por Redes Sociales, Web Checkout, Botón de Pagos y QR Code. El botón 'Afíliate' apunta a medianetpay.ec — un dominio que hoy devuelve `DNS_PROBE_FINISHED_NXDOMAIN`.
+MediaNet ofrece en su sitio web cinco productos de ecommerce bajo la marca MediaNetPay: Link de Cobro, Cobro por Redes Sociales, Web Checkout, Botón de Pagos y QR Code. El botón 'Afíliate' apunta a medianetpay.ec — un dominio que resuelve pero devuelve una página en blanco.
 
-No existe servidor, no existe API, no existe portal.
+No existe servidor, no existe API, no existe portal. Solo una promesa sin cumplir.
 
 | Lo que MediaNet promete | La realidad hoy |
 |------------------------|-----------------|
-| Productos listados públicamente en medianet.com.ec | medianetpay.ec: DNS no resuelve (sitio inexistente) |
-| Botón 'Afíliate' visible en cada producto | Sin backend, sin API, sin base de datos |
-| Dominio medianetpay.ec registrado | Sin portal de comercios operativo |
+| Productos listados públicamente en medianet.com.ec | medianetpay.ec: dominio activo, página vacía, sin backend |
+| Botón 'Afíliate' visible en cada producto | Sin portal de comercios operativo |
 | Manual de usuario publicado (enero 2022) | Ningún comercio puede afiliarse de forma automática |
-| Plugins WooCommerce, PrestaShop, Magento listados | Competidores como Kushki y Datafast capturan el mercado |
+| Plugins WooCommerce, PrestaShop, Magento listados | Solo 3 de 5 plugins existían — VirtueMart y OpenCart faltaban |
+| Productos de cobro digital completos | Competidores como Kushki y Datafast capturan el mercado |
 
-Mientras este producto permanece abandonado, Datafast cobra $80 de certificación + $12/mes, Kushki exige $150/mes mínimo y $6,000 de facturación, y el mercado ecuatoriano de ecommerce superó los $5,500 millones en 2024 sin que MediaNet capture una sola comisión de pasarela digital.
+Mientras este producto permanece abandonado, Datafast cobra $80 de certificación + $12/mes, Kushki exige $150/mes mínimo, y el mercado ecuatoriano de ecommerce superó los $5,500 millones en 2024 sin que MediaNet capture una sola comisión de pasarela digital.
 
 ---
 
@@ -36,22 +36,52 @@ Mientras este producto permanece abandonado, Datafast cobra $80 de certificació
 | Comisión promedio competencia por transacción | 5–8% |
 | Ventaja MediaNet | Ya es procesador con acuerdos Produbanco + Bolivariano + Internacional |
 
-MediaNet ya tiene lo más difícil: los acuerdos con los bancos adquirentes. Cualquier competidor necesita 6 a 12 meses solo para conseguir eso. MediaNet lo tiene desde hace 19 años. Solo falta construir la capa de producto encima.
+MediaNet ya tiene lo más difícil: los acuerdos con los bancos adquirentes. Cualquier competidor necesita 6 a 12 meses solo para conseguir eso. MediaNet lo tiene desde hace 19 años. Solo faltaba construir la capa de producto encima.
 
 ---
 
-## 03 / LA SOLUCIÓN — MediaNetPay construido desde cero, bien hecho.
+## 03 / LO QUE YA ESTÁ CONSTRUIDO — Comparativa completa
 
-La propuesta es simple: construir todo lo que MediaNet ya prometió, con la calidad técnica y la experiencia de developer que ninguna pasarela local tiene hoy.
+### Productos prometidos en la web de MediaNet → Estado actual
 
-| Producto | Descripción | Diferencial vs competencia |
-|----------|-------------|---------------------------|
-| API REST + Sandbox | API documentada, keys instantáneas, sandbox | Datafast: semanas de proceso. Nosotros: 10 minutos |
-| Portal self-service | Registro, dashboard, webhooks, facturación | Sin formularios en papel, sin llamadas al banco |
-| Web Checkout | Modal de pago embebable con 2 líneas de script | Funciona en cualquier sitio sin dependencias de framework |
-| Link de Cobro + QR | Genera links y QR desde el dashboard | Compartible por WhatsApp, no en días |
-| Plugins WooCommerce / PrestaShop | Instalación en 5 minutos, configuración visual | Mejor DX que las versiones actuales |
-| Analytics con IA | Insights automáticos sobre patrones de venta | Nadie en Ecuador lo tiene. Es nuestro moat técnico |
+| Producto prometido | Estado |
+|--------------------|--------|
+| Link de Cobro | ✅ Funcionando — genera link con monto, vigencia y límite de usos |
+| Cobro por Redes Sociales | ✅ Funcionando — es el mismo link, compartible por WhatsApp en un toque |
+| Web Checkout | ✅ Funcionando — modal de pago embebable con 2 líneas de script |
+| Botón de Pagos | ✅ Funcionando — widget.js instalable en cualquier web sin framework |
+| QR Code | ✅ Funcionando — QR dinámico generado desde dashboard y app móvil |
+
+### Productos adicionales construidos (más allá de lo prometido)
+
+| Producto nuevo | Descripción |
+|----------------|-------------|
+| Portal self-service | Registro, dashboard, métricas, API keys, webhooks — sin formularios en papel |
+| App Móvil Android | Login biométrico, cobro por QR, historial de transacciones, SoftPOS |
+| SoftPOS — Datáfono en el celular | El celular Android actúa como datáfono vía NFC. Cap demo: ~20 transacciones |
+| Vitrina Digital | Página pública de servicios por comercio — URL compartible, imagen, precios, link de pago directo |
+| Plugin WooCommerce | Instalación en 5 minutos, configurado visualmente desde el panel de WordPress |
+| Plugin PrestaShop | Mismo flujo — módulo instalable desde el panel de PrestaShop |
+| Plugin VirtueMart | Resuelve uno de los dos plugins faltantes en la plantilla original de MediaNet |
+| Plugin OpenCart | Resuelve el segundo plugin faltante — la lista de 5 plugins está completa |
+| Analytics con IA | Insights automáticos en español por comercio usando Claude (Anthropic) |
+| Sistema de notificaciones | Push notifications + campana en app cuando entra un pago o se paga un link |
+| API Sandbox documentada | Mock de la API de MediaNet para que developers puedan integrar sin acceso real |
+| Webhooks firmados HMAC-SHA256 | Seguridad de nivel bancario en notificaciones salientes — nadie local lo implementa |
+
+### Plataformas / canales cubiertos
+
+| Canal | Estado |
+|-------|--------|
+| Web (cualquier sitio) | ✅ Widget JS + botón de pago |
+| WooCommerce | ✅ Plugin nativo |
+| PrestaShop | ✅ Plugin nativo |
+| VirtueMart | ✅ Plugin nativo |
+| OpenCart | ✅ Plugin nativo |
+| Redes Sociales / WhatsApp | ✅ Link de Cobro |
+| Punto de venta físico (retail) | ✅ SoftPOS — celular como datáfono |
+| QR en local / menú / tarjeta | ✅ QR dinámico |
+| Página pública de servicios | ✅ Vitrina Digital |
 
 ---
 
@@ -64,9 +94,9 @@ La propuesta es simple: construir todo lo que MediaNet ya prometió, con la cali
 | Costo de certificación | $0 (vs $80 de Datafast) |
 | Breakeven estimado | $200K/mes procesado |
 | Margen con $1M/mes (solo comisión pasarela) | ~$4,000/mes |
-| Premium tier (roadmap) | Analytics, soporte prioritario |
+| Premium tier (roadmap) | Analytics avanzado, soporte prioritario, SoftPOS pro |
 
-El modelo es de volumen puro: cuantos más comercios procesen, mejor el margen. Sin costo de entrada para el comercio = adopción masiva. El revenue viene de la escala, no de cobrar caro a pocos.
+El modelo es de volumen puro: sin costo de entrada = adopción masiva. El revenue viene de la escala, no de cobrar caro a pocos.
 
 ---
 
@@ -77,43 +107,58 @@ El modelo es de volumen puro: cuantos más comercios procesen, mejor el margen. 
 - El dominio, la marca y los productos ya están comunicados públicamente
 - 10,000+ comercios afiliados a la red: canal de distribución inmediato
 - Infraestructura de procesamiento probada por 19 años
-- Equipo interno que entiende el negocio y el mercado
 
 **Ventajas que construimos:**
 - DX nivel Stripe: sandbox en 10 minutos, docs interactivas, idempotency keys
 - Sin mensualidad mínima — el emprendedor de 50 ventas/mes no sale perdiendo
+- SoftPOS: el celular como datáfono — nadie local lo ofrece integrado
+- Vitrina Digital: página de servicios pública con link de pago directo — canal de ventas propio
+- Todos los plugins del ecosistema e-commerce ecuatoriano cubiertos (5/5)
 - Analytics con LLM integrado: insights que ningún competidor local tiene
 - Onboarding en 24 horas vs semanas de proceso manual en la competencia
-- Firma de webhooks HMAC-SHA256 — seguridad que nadie local implementa
 
 > El mercado ecuatoriano nunca tuvo un Stripe. Los ingredientes siempre estuvieron en MediaNet. Solo faltaba alguien que los uniera.
 
 ---
 
-## 06 / TIMELINE — De cero a comercios reales en 10 semanas.
+## 06 / VISIÓN A FUTURO — Más allá del ecommerce
 
-| Semana | Hito | Entregable |
-|--------|------|-----------|
-| 1–2 | Conector MediaNet | Cobro de prueba end-to-end funcionando |
-| 3–4 | API core pública | Postman collection funcionando contra la API |
-| 5–6 | Portal de comercios | Un comercio puede registrarse y ver sus cobros |
-| 7–8 | Plugin WooCommerce + Docs | Un developer integra en menos de 30 minutos |
-| 9–10 | Beta privada | Primeras transacciones reales de clientes finales |
-| Post-beta | Lanzamiento público | Producto completo disponible para todo el mercado |
+El ecommerce de hoy se construye para el retail. El de mañana se construye para la IA.
+
+Ecuador tiene 4 proyectos de datacenter activos o en construcción (2024-2026). La IA generativa requiere infraestructura de pagos de baja latencia y alta disponibilidad para monetizar APIs, modelos y servicios por uso. MediaNet, con 19 años de operación bancaria certificada, está posicionada para ser el proveedor de tecnología de pagos de esa infraestructura.
+
+El camino: pasarela ecommerce → procesador para plataformas digitales → infraestructura de pagos para servicios de IA en Ecuador.
 
 ---
 
-## 07 / LO QUE NECESITO DE MEDIANET — Cuatro cosas. Sin ellas, nada de esto existe.
+## 07 / TIMELINE — De prototipo a comercios reales.
 
-| Necesidad | Por qué es crítico | Alternativa si no existe |
-|-----------|-------------------|--------------------------|
-| Acceso a la API interna de MediaNet | Para conectar el conector de pagos al procesador | Sin esto no hay producto — es la pieza central |
-| Modelo PayFac / Sub-merchant | Para onboardear comercios directamente | Sin boarding automático al banco el diferencial de self-service no existe |
-| Dominio y hosting para medianetpay.ec | La marca ya está comunicada — necesitamos activarla | Nuevo dominio, pero se pierde la comunicación existente |
-| Alineación con el equipo de MediaNet | Para que el conector sea oficial y no un workaround | Integración frágil que se rompe con cada cambio interno |
-
-> El objetivo final: MediaNet captura el mercado de ecommerce que hoy se está yendo a Kushki, Datafast y Payphone — con su propia infraestructura, su propia marca, y un producto mejor que todos ellos.
+| Fase | Estado | Entregable |
+|------|--------|-----------|
+| Análisis de mercado y vacíos | ✅ Completo | Documento de ineficiencias e-commerce Ecuador |
+| Backend API + autenticación | ✅ Completo | API REST desplegada en GCP Cloud Run |
+| Portal self-service | ✅ Completo | Dashboard de comercios en producción |
+| App Móvil Android | ✅ Completo | APK instalable, SoftPOS funcional |
+| Plugins (5/5) | ✅ Completo | WooCommerce, PrestaShop, VirtueMart, OpenCart + Widget JS |
+| Vitrina Digital | ✅ Completo | Página pública por comercio, URL compartible |
+| Analytics + IA | ✅ Completo | Insights automáticos en español |
+| Conexión API MediaNet | ⏳ Pendiente | Requiere acceso a la API interna de MediaNet |
+| Beta privada con comercios reales | ⏳ Pendiente | Primeras transacciones reales |
+| Lanzamiento público | ⏳ Pendiente | Producto completo para todo el mercado |
 
 ---
 
-*MediaNet S.A. | medianetpay.ec | Propuesta confidencial — Mayo 2026*
+## 08 / LO QUE NECESITO DE MEDIANET — Tres cosas. Sin ellas, nada de esto va a producción.
+
+| Necesidad | Por qué es crítico |
+|-----------|-------------------|
+| Acceso a la API interna de MediaNet | El único GET/POST que falta para que todo funcione en producción |
+| Modelo PayFac / Sub-merchant | Para onboardear comercios sin proceso manual con el banco |
+| Alineación con el equipo técnico | Para que el conector sea oficial y no un workaround frágil |
+
+Todo lo demás ya está construido. La plataforma existe, funciona, y puede mostrarse en vivo.
+
+---
+
+*MediaNet S.A. | medianetpay.ec | Propuesta confidencial — Junio 2026*
+*Stan Morocho — stan@medianetpay.ec*

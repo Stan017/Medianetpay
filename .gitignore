@@ -13,3 +13,9 @@ node_modules/
 .DS_Store
 Thumbs.db
 Docs/*.pdf
+
+# Archivos de prueba local
+*.txt
+*_body.json
+cookies.txt
+test_cookies.txt

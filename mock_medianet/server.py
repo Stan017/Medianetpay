@@ -108,7 +108,8 @@ async def create_webcheckout(request: Request) -> dict:
         "status": "pending",
     }
 
-    payment_link = f"http://localhost:9000/payment/{token}"
+    base_url = str(request.base_url).rstrip("/")
+    payment_link = f"{base_url}/payment/{token}"
     return {"link": payment_link}
 
 

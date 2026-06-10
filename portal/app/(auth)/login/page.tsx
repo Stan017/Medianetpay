@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { api, ApiError } from "@/lib/api";
+import { loginAction } from "@/app/actions/auth";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -17,10 +15,11 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
     try {
-      await api.post("/v1/auth/login", form);
-      router.push("/dashboard");
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Error inesperado");
+      // Server Action: hace el fetch, setea la cookie y redirige — todo en el servidor
+      const result = await loginAction(form.email, form.password);
+      if (result?.error) setError(result.error);
+    } catch {
+      // loginAction lanza NEXT_REDIRECT al redirigir — no es un error real
     } finally {
       setLoading(false);
     }

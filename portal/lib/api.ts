@@ -1,21 +1,15 @@
 /**
- * api.ts — cliente HTTP para el portal.
+ * api.ts — cliente HTTP universal para el portal.
  *
- * Dos helpers:
- *  - apiClient  → para Client Components ("use client"). Usa credentials: "include"
- *                 para que el browser envíe la cookie automáticamente.
- *  - apiServer  → para Server Components. Recibe la cookie string del request
- *                 entrante y la reenvía al backend manualmente.
+ * Un solo objeto `api` que funciona en Server Components, Client Components
+ * y Server Actions sin configuración adicional.
  *
- * Uso en Server Components:
- *   import { createServerApi } from "@/lib/api";
- *   import { cookies } from "next/headers";
- *   const api = await createServerApi();
+ * En servidor: lee `access_token` de next/headers y lo reenvía como Cookie.
+ * En cliente:  lee `access_token` de document.cookie y lo envía como Bearer.
+ *
+ * Uso idéntico en cualquier contexto:
+ *   import { api } from "@/lib/api";
  *   const data = await api.get<Foo>("/v1/...");
- *
- * Uso en Client Components:
- *   import { apiClient } from "@/lib/api";
- *   await apiClient.post("/v1/...", body);
  */
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
@@ -36,47 +30,37 @@ function buildError(status: number, body: unknown): ApiError {
   return new ApiError(status, d?.code ?? "unknown", d?.message ?? String(status));
 }
 
-// ── Client-side helper ────────────────────────────────────────────────────────
+// ── Request universal (server + client) ──────────────────────────────────────
 
-async function clientRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
-    ...init,
-    credentials: "include",
-    headers: { "Content-Type": "application/json", ...(init.headers ?? {}) },
-  });
+async function universalRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const authHeaders: Record<string, string> = {};
 
-  if (!res.ok) {
-    throw buildError(res.status, await res.json().catch(() => ({})));
+  if (typeof window === "undefined") {
+    // Server-side (Server Components, Server Actions, Route Handlers)
+    // Lee la cookie desde next/headers y la reenvía al backend
+    try {
+      const { cookies } = await import("next/headers");
+      const cookieStore = await cookies();
+      const cookieHeader = cookieStore.toString();
+      if (cookieHeader) authHeaders["Cookie"] = cookieHeader;
+    } catch {
+      // Fuera de contexto de request (build time, etc.) — no hay cookie
+    }
+  } else {
+    // Client-side: lee el token de document.cookie (cookie NO httpOnly)
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("access_token="))
+      ?.split("=")[1];
+    if (token) authHeaders["Authorization"] = `Bearer ${token}`;
   }
-  if (res.status === 204) return undefined as T;
-  return res.json() as T;
-}
 
-export const apiClient = {
-  get: <T>(path: string) => clientRequest<T>(path),
-  post: <T>(path: string, body: unknown) =>
-    clientRequest<T>(path, { method: "POST", body: JSON.stringify(body) }),
-  put: <T>(path: string, body: unknown) =>
-    clientRequest<T>(path, { method: "PUT", body: JSON.stringify(body) }),
-  patch: <T>(path: string, body: unknown) =>
-    clientRequest<T>(path, { method: "PATCH", body: JSON.stringify(body) }),
-  delete: <T>(path: string) =>
-    clientRequest<T>(path, { method: "DELETE" }),
-};
-
-// ── Server-side helper ────────────────────────────────────────────────────────
-
-async function serverRequest<T>(
-  cookieHeader: string,
-  path: string,
-  init: RequestInit = {},
-): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",
-      Cookie: cookieHeader,
+      ...authHeaders,
       ...(init.headers ?? {}),
     },
   });
@@ -88,28 +72,27 @@ async function serverRequest<T>(
   return res.json() as T;
 }
 
+// ── API object ────────────────────────────────────────────────────────────────
+
+export const api = {
+  get: <T>(path: string) => universalRequest<T>(path),
+  post: <T>(path: string, body: unknown) =>
+    universalRequest<T>(path, { method: "POST", body: JSON.stringify(body) }),
+  put: <T>(path: string, body: unknown) =>
+    universalRequest<T>(path, { method: "PUT", body: JSON.stringify(body) }),
+  patch: <T>(path: string, body: unknown) =>
+    universalRequest<T>(path, { method: "PATCH", body: JSON.stringify(body) }),
+  delete: <T>(path: string) =>
+    universalRequest<T>(path, { method: "DELETE" }),
+};
+
+// Alias para compatibilidad con imports existentes
+export const apiClient = api;
+
 /**
- * Crea un helper de API para Server Components.
- * Extrae automáticamente la cookie del request entrante.
- *
- * @example
- *   const api = await createServerApi();
- *   const profile = await api.get<MerchantProfile>("/v1/auth/me");
+ * @deprecated Usar `api` directamente — ahora es universal.
+ * Se mantiene para no romper imports existentes.
  */
 export async function createServerApi() {
-  // Import dinámico para no romper Client Components que importan este archivo
-  const { cookies } = await import("next/headers");
-  const cookieStore = await cookies();
-  const cookieHeader = cookieStore.toString();
-
-  return {
-    get: <T>(path: string) => serverRequest<T>(cookieHeader, path),
-    post: <T>(path: string, body: unknown) =>
-      serverRequest<T>(cookieHeader, path, { method: "POST", body: JSON.stringify(body) }),
-    put: <T>(path: string, body: unknown) =>
-      serverRequest<T>(cookieHeader, path, { method: "PUT", body: JSON.stringify(body) }),
-  };
+  return api;
 }
-
-// Re-export apiClient como "api" para mantener compatibilidad con Client Components existentes
-export const api = apiClient;

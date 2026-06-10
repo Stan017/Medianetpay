@@ -402,7 +402,7 @@
 </head>
 <body class="bg-background text-on-surface font-body-md overflow-x-hidden" style="font-family: 'Outfit', sans-serif;">
 <!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 bg-surface-glass nav-blur border-b border-outline-variant/30 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto left-1/2 -translate-x-1/2">
+<nav class="fixed top-0 w-full z-50 bg-surface-glass nav-blur border-b border-outline-variant/30 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto left-1/2 -translate-x-1/2 rounded-b-2xl">
 <div class="flex items-center gap-12">
 <img alt="MedianetPay Logo" class="h-8 w-auto" src="/logo.png"/>
 <div class="hidden md:flex gap-8">
@@ -426,12 +426,20 @@
 <div class="hero-slide hd-active">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center md:text-left grid md:grid-cols-2 items-center gap-12">
 <div class="space-y-8">
+<span class="inline-block bg-white/15 backdrop-blur-sm text-white/90 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest mb-2">MEDIANET ECUADOR</span>
 <h1 class="font-display-lg-mobile md:text-display-lg text-white leading-tight">
-                    El futuro de los pagos en <span style="color:#F89937">Ecuador</span> es digital.
-                </h1>
+  Cobra online <span style="color:#F89937">sin intermediarios</span>
+</h1>
 <p class="font-body-lg text-white/80 max-w-lg">
-                    Acepta todas las tarjetas de crédito y débito locales e internacionales. Ofrece pagos corrientes y diferidos con la infraestructura financiera más avanzada del país.
-                </p>
+  Conecta tu plataforma a la red de pagos más grande del país.
+</p>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/70 text-sm font-medium">
+  <span><span class="text-white font-bold">10k+</span> comercios activos</span>
+  <span class="text-white/30">·</span>
+  <span>Sin mensualidad</span>
+  <span class="text-white/30">·</span>
+  <span>Activo en <span class="text-white font-bold">24h</span></span>
+</div>
 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
 <a href="/register" class="bg-white text-primary px-8 py-4 rounded-xl font-headline-md shadow-xl hover:bg-surface-container-low transition-colors">Crear Cuenta</a>
 <a href="mailto:ventas@medianetpay.ec" class="bg-white/10 text-white backdrop-blur-md border border-white/20 px-8 py-4 rounded-xl font-headline-md hover:bg-white/20 transition-colors">Contactar Ventas</a>
@@ -635,15 +643,26 @@
 <section class="py-14 bg-gradient-to-b from-white to-[#eef2ff]">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 <div class="mb-12 text-center">
-  <span class="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-label-md font-bold mb-4 tracking-wide">SOLUCIONES</span>
-  <h2 class="font-headline-xl text-deep-navy mb-3">Para cada modelo de negocio</h2>
-  <p class="text-on-surface-variant max-w-xl mx-auto">Herramientas diseñadas para escalar junto a tu empresa, sin fricción técnica.</p>
+  <span class="inline-block bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold mb-4 tracking-widest">PARA COMERCIOS EC</span>
+  <h2 class="font-display-lg-mobile md:text-display-lg text-deep-navy leading-tight mb-3">
+    Cobra online <span class="text-primary">sin intermediarios</span>
+  </h2>
+  <p class="text-on-surface-variant max-w-xl mx-auto mb-5">
+    Conecta tu plataforma a la red de pagos más grande del país.
+  </p>
+  <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-slate-500 text-sm font-medium">
+    <span><span class="text-deep-navy font-bold">10k+</span> comercios activos</span>
+    <span class="text-slate-300">·</span>
+    <span>Sin mensualidad</span>
+    <span class="text-slate-300">·</span>
+    <span>Activo en <span class="text-deep-navy font-bold">24h</span></span>
+  </div>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
 
   <!-- Feature 1: Links de Pago — hero card oscura -->
-  <div class="md:col-span-7 bg-gradient-to-br from-[#003358] via-[#004a80] to-[#0050cb] rounded-3xl p-8 bento-hover overflow-hidden relative group">
+  <div class="md:col-span-7 bg-gradient-to-br from-[#004a80] to-[#FFB08A] rounded-3xl p-8 bento-hover overflow-hidden relative group">
     <div class="absolute -top-16 -right-16 w-64 h-64 bg-blue-400/20 blur-3xl rounded-full pointer-events-none"></div>
     <div class="absolute -bottom-8 -left-8 w-48 h-48 bg-cyan-400/10 blur-3xl rounded-full pointer-events-none"></div>
     <div class="relative z-10">
@@ -654,28 +673,28 @@
       <p class="text-blue-200/80 mb-7 max-w-xs text-sm leading-relaxed">Cobra por WhatsApp o Redes Sociales sin necesidad de un sitio web. Crea un enlace y recibe dinero al instante.</p>
 
       <!-- Mock: ventana de pago con URL bar -->
-      <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden">
+      <div class="bg-white/75 backdrop-blur-sm border border-white/40 rounded-2xl overflow-hidden">
         <!-- Browser bar -->
-        <div class="bg-white/5 border-b border-white/10 px-4 py-2.5 flex items-center gap-2">
+        <div class="bg-white/50 border-b border-slate-200/70 px-4 py-2.5 flex items-center gap-2">
           <div class="flex gap-1.5">
-            <div class="w-2 h-2 rounded-full bg-red-400/60"></div>
-            <div class="w-2 h-2 rounded-full bg-yellow-400/60"></div>
-            <div class="w-2 h-2 rounded-full bg-green-400/60"></div>
+            <div class="w-2 h-2 rounded-full bg-red-400"></div>
+            <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+            <div class="w-2 h-2 rounded-full bg-green-400"></div>
           </div>
-          <div class="flex-1 bg-white/10 rounded-md px-3 py-1 flex items-center gap-2">
-            <span class="material-symbols-outlined text-green-400 text-xs" style="font-size:13px">lock</span>
-            <span class="text-blue-200 text-xs font-code-sm truncate">medianetpay.ec/p/<span class="text-cyan-300">abc123</span></span>
+          <div class="flex-1 bg-white/60 rounded-md px-3 py-1 flex items-center gap-2">
+            <span class="material-symbols-outlined text-green-600 text-xs" style="font-size:13px">lock</span>
+            <span class="text-slate-500 text-xs font-code-sm truncate">medianetpay.ec/p/<span class="text-slate-700 font-semibold">abc123</span></span>
           </div>
         </div>
         <!-- Payment page preview -->
         <div class="p-4 flex items-center gap-4">
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 mb-1">
-              <img src="/logo.png" alt="MP" class="h-4 w-auto brightness-0 invert opacity-80"/>
+              <img src="/logo.png" alt="MP" class="h-4 w-auto opacity-80"/>
             </div>
-            <p class="text-white/60 text-xs mb-0.5">Cobro de Consultoría</p>
-            <p class="text-white text-2xl font-bold leading-none">$120.00</p>
-            <p class="text-blue-300 text-xs mt-1">Vence en 23h 47m</p>
+            <p class="text-slate-500 text-xs mb-0.5">Cobro de Consultoría</p>
+            <p class="text-slate-900 text-2xl font-bold leading-none">$120.00</p>
+            <p class="text-slate-500 text-xs mt-1">Vence en 23h 47m</p>
           </div>
           <!-- Botón Pagar animado -->
           <button class="shrink-0 bg-gradient-to-r from-cyan-400 to-blue-400 text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-lg shadow-blue-900/40 animate-pulse-slow hover:scale-105 transition-transform">
@@ -683,9 +702,9 @@
           </button>
         </div>
         <!-- Barra de confianza -->
-        <div class="border-t border-white/10 px-4 py-2 flex items-center gap-2">
-          <span class="material-symbols-outlined text-green-400" style="font-size:13px">verified_user</span>
-          <span class="text-blue-300 text-xs">Pago seguro · PCI DSS · Cifrado SSL</span>
+        <div class="border-t border-slate-200/70 px-4 py-2 flex items-center gap-2">
+          <span class="material-symbols-outlined text-green-600" style="font-size:13px">verified_user</span>
+          <span class="text-slate-500 text-xs">Pago seguro · PCI DSS · Cifrado SSL</span>
         </div>
       </div>
     </div>
@@ -698,7 +717,7 @@
       <div class="w-11 h-11 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-5">
         <span class="material-symbols-outlined" data-icon="code">code</span>
       </div>
-      <h3 class="font-headline-md text-deep-navy mb-2">Botones de Pago</h3>
+      <h3 class="text-xl font-bold text-deep-navy mb-2">Botones de Pago</h3>
       <p class="text-on-surface-variant text-sm mb-6">Copia y pega una línea de código. Tus clientes pagan sin salir de tu sitio web.</p>
       <div class="mt-auto bg-[#0d1117] rounded-2xl p-4 font-code-sm text-sm">
         <div class="flex gap-1.5 mb-3">
@@ -721,23 +740,23 @@
       <div class="w-11 h-11 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mb-5">
         <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
       </div>
-      <h3 class="font-headline-md text-deep-navy mb-2">Plugins E-commerce</h3>
+      <h3 class="text-xl font-bold text-deep-navy mb-2">Plugins E-commerce</h3>
       <p class="text-on-surface-variant text-sm mb-5">Conecta tu tienda en minutos.</p>
       <div class="flex flex-col gap-2 mt-auto">
         <div class="flex items-center gap-3 px-3 py-2.5 bg-slate-50 rounded-xl">
-          <span class="text-base">🛒</span>
+          <img src="/woocommerce.png" alt="WooCommerce" class="h-5 w-auto object-contain">
           <span class="text-sm font-medium text-on-surface">WooCommerce</span>
-          <span class="ml-auto text-xs text-green-600 font-semibold bg-green-50 px-2 py-0.5 rounded-full">Listo</span>
+          <span class="ml-auto text-xs text-green-600 font-semibold bg-green-50 px-2 py-0.5 rounded-full flex items-center gap-1"><span>✓</span> Listo</span>
         </div>
         <div class="flex items-center gap-3 px-3 py-2.5 bg-slate-50 rounded-xl">
-          <span class="text-base">🏪</span>
+          <img src="/prestashop.png" alt="PrestaShop" class="h-5 w-auto object-contain">
           <span class="text-sm font-medium text-on-surface">PrestaShop</span>
-          <span class="ml-auto text-xs text-green-600 font-semibold bg-green-50 px-2 py-0.5 rounded-full">Listo</span>
+          <span class="ml-auto text-xs text-green-600 font-semibold bg-green-50 px-2 py-0.5 rounded-full flex items-center gap-1"><span>✓</span> Listo</span>
         </div>
         <div class="flex items-center gap-3 px-3 py-2.5 bg-slate-50 rounded-xl">
-          <span class="text-base">⚡</span>
+          <img src="/magento.png" alt="Magento" class="h-5 w-auto object-contain">
           <span class="text-sm font-medium text-on-surface">Magento</span>
-          <span class="ml-auto text-xs text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded-full">Pronto</span>
+          <span class="ml-auto text-xs text-blue-600 font-semibold flex items-center gap-1">✓ Listo</span>
         </div>
       </div>
     </div>
@@ -750,7 +769,7 @@
       <div class="w-11 h-11 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-5">
         <span class="material-symbols-outlined" data-icon="qr_code_2">qr_code_2</span>
       </div>
-      <h3 class="font-headline-md text-deep-navy mb-2">Códigos QR</h3>
+      <h3 class="text-xl font-bold text-deep-navy mb-2">Códigos QR</h3>
       <p class="text-on-surface-variant text-sm mb-6">Cobra en punto de venta físico al instante desde cualquier billetera digital.</p>
       <!-- SVG QR mock -->
       <div class="mt-auto w-28 h-28 bg-white border-2 border-slate-100 rounded-2xl p-2 shadow-inner">

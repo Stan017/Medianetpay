@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { api } from "@/lib/api";
+import { usePathname } from "next/navigation";
+import { logoutAction } from "@/app/actions/auth";
 import { cn } from "@/lib/utils";
 import { NotificationBadge } from "@/components/notification-badge";
 import {
@@ -30,12 +30,6 @@ const NAV = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const router = useRouter();
-
-  async function handleLogout() {
-    await api.post("/v1/auth/logout", {});
-    router.push("/login");
-  }
 
   return (
     <aside className="w-56 shrink-0 bg-slate-900 flex flex-col">
@@ -77,7 +71,7 @@ export function Sidebar() {
       {/* Logout */}
       <div className="px-3 py-4 border-t border-slate-800">
         <button
-          onClick={handleLogout}
+          onClick={() => logoutAction()}
           className="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-sm font-medium text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-colors"
         >
           <LogOut size={15} />

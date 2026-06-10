@@ -94,16 +94,6 @@ export interface ApiError extends Error {
 apiClient.interceptors.response.use(
   (res) => res,
   (err: AxiosError<any>) => {
-    // DEBUG — visible en Metro bundler. Remover en producción.
-    console.warn('[API ERROR]', {
-      url: err.config?.url,
-      method: err.config?.method?.toUpperCase(),
-      status: err.response?.status,
-      data: err.response?.data,
-      message: err.message,
-      code: err.code,
-    });
-
     const detail = err?.response?.data?.detail;
     const backendMsg =
       typeof detail === 'string'
