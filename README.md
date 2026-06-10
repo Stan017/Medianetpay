@@ -131,10 +131,15 @@ uvicorn app.main:app --reload --port 8000
 ### 4. Start the mock MediaNet server (local testing)
 ```bash
 uvicorn mock_medianet.server:app --port 9000
-# or with Docker:
-docker build -f Dockerfile.mock -t medianetpay-mock .
-docker run -p 9000:9000 medianetpay-mock
 ```
+
+**Alternatively — start backend + mock together with Docker Compose:**
+```bash
+docker compose up          # backend on :8000, mock on :9000
+docker compose up -d       # background
+docker compose logs -f api # stream backend logs
+```
+> Note: on Windows/WSL2, Docker can't route IPv6 to Supabase. Use the manual steps above for local Windows dev.
 
 ### 5. Start the merchant portal
 ```bash
@@ -159,30 +164,34 @@ Interactive docs available at `/docs` when running locally.
 ### Core endpoints
 
 ```
-POST /v1/auth/register          Create merchant account
-POST /v1/auth/login             Get JWT token
-GET  /v1/auth/me                Merchant profile
+POST /v1/auth/register               Create merchant account
+POST /v1/auth/login                  Get JWT token
+GET  /v1/auth/me                     Merchant profile
 
-POST /v1/charges                Initiate a payment
-GET  /v1/charges/{id}           Get transaction status
-POST /v1/charges/{id}/refund    Issue a refund
+POST /v1/charges                     Initiate a payment
+GET  /v1/charges/{id}                Get transaction status
+POST /v1/refunds                     Issue a refund
+GET  /v1/refunds/{id}                Get refund status
 
-POST /v1/links                  Create a payment link
-GET  /v1/links                  List payment links
-GET  /pay/{token}               Hosted checkout page (public)
-POST /pay/{token}/charge        Process checkout payment (public)
+POST /v1/links                       Create a payment link
+GET  /v1/links                       List payment links
+GET  /pay/{token}                    Hosted checkout page (public)
+POST /pay/{token}/charge             Process checkout payment (public)
 
-POST /v1/softpos/charge         NFC tap-to-pay charge
+POST /v1/softpos/charge              NFC tap-to-pay charge
 
-GET  /v1/transactions           Transaction history (with filters)
+GET  /v1/transactions                Transaction history (with filters)
 
-GET  /v1/analytics/summary      Volume, success rate, top hours
-GET  /v1/analytics/insights     LLM-generated narrative insights
+GET  /v1/analytics/summary           Volume, success rate, conversion
+GET  /v1/analytics/hourly            Hourly transaction breakdown
+GET  /v1/analytics/weekly            Weekly trend chart
+GET  /v1/analytics/customers         Top customers + repeat rate
 
-POST /v1/webhooks/test          Fire a test webhook
-GET  /v1/notifications          In-app notifications
+POST /v1/webhooks/test               Fire a test webhook to your endpoint
+GET  /v1/notifications               In-app merchant notifications
+POST /v1/chat                        Annie — AI assistant (public, no auth)
 
-GET  /v1/public/vitrina/{slug}  Public merchant storefront (no auth)
+GET  /v1/public/vitrina/{slug}       Public merchant storefront (no auth)
 ```
 
 ### Authentication
@@ -283,8 +292,7 @@ State transitions go through a dedicated service. Direct DB status writes are ne
 
 ## Built by
 
-**Stanley Llaguno** — for MediaNet S.A., Ecuador  
-Contact: [LinkedIn](https://linkedin.com/in/stanleyllaguno)
+**Stanley Llaguno** — for MediaNet S.A., Ecuador
 
 ---
 
