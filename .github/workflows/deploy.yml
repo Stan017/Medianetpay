@@ -117,7 +117,8 @@ jobs:
             --set-env-vars "MEDIANET_API_USERNAME=${{ secrets.MEDIANET_API_USERNAME }}" \
             --set-env-vars "MEDIANET_API_SECRET=${{ secrets.MEDIANET_API_SECRET }}" \
             --set-env-vars "PORTAL_BASE_URL=${{ secrets.PORTAL_BASE_URL }}" \
-            --set-env-vars "API_BASE_URL=${{ secrets.API_BASE_URL }}"
+            --set-env-vars "API_BASE_URL=${{ secrets.API_BASE_URL }}" \
+            --set-env-vars "ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}"
 
       # ── 7. Mostrar URL del servicio desplegado ──────────────────────────────
       - name: URL del servicio

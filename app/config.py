@@ -36,6 +36,10 @@ class Settings(BaseSettings):
     # Anthropic
     anthropic_api_key: str = ""
 
+    # Fernet encryption key for sensitive DB fields (webhook_secret)
+    # Generate: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+    encryption_key: str = ""
+
     # Sentry
     sentry_dsn: str = ""
 

@@ -16,6 +16,7 @@ from app.db import get_db
 from app.middleware.jwt_auth import require_portal_auth
 from app.models.merchant import Merchant
 from app.modules.auth.service import login, register
+from app.utils.encryption import encrypt
 from app.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -248,7 +249,7 @@ async def update_webhook(
     db: AsyncSession = Depends(get_db),
 ) -> Merchant:
     merchant.webhook_url = body.webhook_url
-    merchant.webhook_secret = body.webhook_secret
+    merchant.webhook_secret = encrypt(body.webhook_secret)
     await db.commit()
     await db.refresh(merchant)
     return merchant

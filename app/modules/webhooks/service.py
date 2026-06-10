@@ -19,6 +19,7 @@ from urllib.parse import urlparse
 import httpx
 
 from app.models.merchant import Merchant
+from app.utils.encryption import decrypt
 from app.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -70,7 +71,7 @@ async def send_test_webhook(merchant: Merchant) -> dict:
         },
     }
 
-    secret = merchant.webhook_secret or ""
+    secret = decrypt(merchant.webhook_secret) if merchant.webhook_secret else ""
     signature = _sign_payload(payload, secret)
     body = json.dumps(payload)
 
@@ -127,7 +128,7 @@ async def fire_charge_webhook(merchant: Merchant, transaction: dict) -> None:
         "data": transaction,
     }
 
-    secret = merchant.webhook_secret or ""
+    secret = decrypt(merchant.webhook_secret) if merchant.webhook_secret else ""
     signature = _sign_payload(payload, secret)
     body = json.dumps(payload)
     headers = {
