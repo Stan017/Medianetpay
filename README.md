@@ -1,5 +1,7 @@
 # MediaNetPay
 
+[![Deploy to Cloud Run](https://github.com/Stan017/Medianetpay/actions/workflows/deploy.yml/badge.svg)](https://github.com/Stan017/Medianetpay/actions/workflows/deploy.yml)
+
 **Open-source payment gateway for Ecuador** — built on top of MediaNet S.A.'s 19-year processing infrastructure (Produbanco, Banco Bolivariano, Banco Internacional).
 
 > MediaNet already operates 10,000+ POS terminals across Ecuador. MediaNetPay is the digital layer: API, merchant portal, mobile SoftPOS, checkout widget, and e-commerce plugins — all from scratch, in 10 weeks to beta.
