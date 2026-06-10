@@ -293,7 +293,7 @@ State transitions go through a dedicated service. Direct DB status writes are ne
 ## Built by
 
 **Stanley Llaguno** — for MediaNet S.A., Ecuador  
-[LinkedIn](https://www.linkedin.com/in/stanley-llaguno-7) · [YouTube](https://youtube.com/@notstan17)
+[LinkedIn](https://www.linkedin.com/in/stanley-llaguno-7737b724b/) · [YouTube](https://youtube.com/@notstan17)
 
 ---
 

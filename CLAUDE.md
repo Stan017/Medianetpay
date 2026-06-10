@@ -28,7 +28,7 @@ No hay backend, no hay API, no hay portal. Kushki y Datafast están capturando e
 La propuesta: construir todo lo prometido, con calidad técnica nivel Stripe, en 10 semanas a beta.
 
 Cliente: Karina — MediaNet S.A.
-Autor: Stanley Llaguno (github: Stan017, linkedin: stanley-llaguno-7)
+Autor: Stanley Llaguno (github: Stan017, linkedin: https://www.linkedin.com/in/stanley-llaguno-7737b724b/)
 
 ---
 
