@@ -8,6 +8,30 @@
 
 ---
 
+## Screenshots
+
+**Landing page**
+
+![Landing](docs/screenshots/homepage.png)
+
+**Merchant portal**
+
+| Dashboard | Mi Vitrina |
+|-----------|-----------|
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Vitrina](docs/screenshots/vitrina-portal.png) |
+
+**Mobile app**
+
+<p align="center">
+  <img src="docs/screenshots/mobile-login.jpeg" width="18%" />
+  <img src="docs/screenshots/mobile-home.jpeg" width="18%" />
+  <img src="docs/screenshots/mobile-nfc.jpeg" width="18%" />
+  <img src="docs/screenshots/mobile-approved.jpeg" width="18%" />
+  <img src="docs/screenshots/mobile-vitrina.jpeg" width="18%" />
+</p>
+
+---
+
 ## What's included
 
 | Layer | What it does |
