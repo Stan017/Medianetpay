@@ -1,0 +1,77 @@
+name: Deploy Mock MediaNet
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'mock_medianet/**'
+      - 'Dockerfile.mock'
+      - '.github/workflows/deploy-mock.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build & Deploy Mock
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Autenticar en GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SA_EMAIL }}
+
+      - name: Configurar gcloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Configurar Docker → Artifact Registry
+        run: |
+          gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
+
+      - name: Build imagen Docker mock
+        env:
+          IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_AR_REPO }}/mock
+        run: |
+          docker build \
+            --tag $IMAGE:${{ github.sha }} \
+            --tag $IMAGE:latest \
+            -f Dockerfile.mock \
+            .
+
+      - name: Push imagen a Artifact Registry
+        env:
+          IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_AR_REPO }}/mock
+        run: |
+          docker push $IMAGE:${{ github.sha }}
+          docker push $IMAGE:latest
+
+      - name: Deploy mock a Cloud Run
+        env:
+          IMAGE: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_AR_REPO }}/mock
+        run: |
+          gcloud run deploy medianetpay-mock \
+            --image $IMAGE:${{ github.sha }} \
+            --region ${{ secrets.GCP_REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 9000 \
+            --memory 256Mi \
+            --cpu 1 \
+            --min-instances 1 \
+            --max-instances 2 \
+            --timeout 30
+
+      - name: URL del mock
+        run: |
+          gcloud run services describe medianetpay-mock \
+            --region ${{ secrets.GCP_REGION }} \
+            --format "value(status.url)"

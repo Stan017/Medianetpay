@@ -133,7 +133,7 @@ async def create_softpos_charge(
     # ── 2. Llamar al conector MediaNet POS ──────────────────────────────────────
     medianet_result: dict = {}
     try:
-        async with httpx.AsyncClient(timeout=10.0) as client:
+        async with httpx.AsyncClient(timeout=20.0) as client:
             resp = await client.post(
                 f"{settings.medianet_api_url}/app/webservice/pos/charge",
                 json={
