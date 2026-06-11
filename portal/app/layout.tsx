@@ -23,7 +23,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${outfit.variable} font-sans h-full antialiased`}>{children}</body>
+      <body suppressHydrationWarning className={`${outfit.variable} font-sans h-full antialiased`}>{children}</body>
     </html>
   );
 }

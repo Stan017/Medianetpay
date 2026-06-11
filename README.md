@@ -12,22 +12,22 @@
 
 **Landing page**
 
-![Landing](docs/screenshots/homepage.png)
+![Landing](Docs/screenshots/homepage.png)
 
 **Merchant portal**
 
 | Dashboard | Mi Vitrina |
 |-----------|-----------|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Vitrina](docs/screenshots/vitrina-portal.png) |
+| ![Dashboard](Docs/screenshots/dashboard.png) | ![Vitrina](Docs/screenshots/vitrina-portal.png) |
 
 **Mobile app**
 
 <p align="center">
-  <img src="docs/screenshots/mobile-login.jpeg" width="18%" />
-  <img src="docs/screenshots/mobile-home.jpeg" width="18%" />
-  <img src="docs/screenshots/mobile-nfc.jpeg" width="18%" />
-  <img src="docs/screenshots/mobile-approved.jpeg" width="18%" />
-  <img src="docs/screenshots/mobile-vitrina.jpeg" width="18%" />
+  <img src="Docs/screenshots/mobile-login.jpeg" width="18%" />
+  <img src="Docs/screenshots/mobile-home.jpeg" width="18%" />
+  <img src="Docs/screenshots/mobile-nfc.jpeg" width="18%" />
+  <img src="Docs/screenshots/mobile-approved.jpeg" width="18%" />
+  <img src="Docs/screenshots/mobile-vitrina.jpeg" width="18%" />
 </p>
 
 ---
