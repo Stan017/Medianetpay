@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
   Linking, Alert, TextInput, Modal,
 } from 'react-native';
+import { playResultSound } from '../utils/sound';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -100,6 +101,8 @@ export default function POSResultScreen() {
   } = route.params;
 
   const approved = status === 'completed';
+
+  useEffect(() => { playResultSound(approved); }, []);
 
   // Si ya viene teléfono del cliente, no necesitamos pedirlo
   const [receiptModal, setReceiptModal] = useState(false);
