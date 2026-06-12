@@ -86,7 +86,7 @@ async def checkout_page(
     </div>"""
         initial_btn_label = "Ingresar monto para continuar"
 
-    html = f"""<!DOCTYPE html>
+    _page = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -240,7 +240,7 @@ async def checkout_page(
 </script>
 </body>
 </html>"""
-    return HTMLResponse(content=html)
+    return HTMLResponse(content=_page)
 
 
 # ── Página de resultado final ─────────────────────────────────────────────────
@@ -280,7 +280,7 @@ def _render_result_page(result: str, txn_id: str | None) -> HTMLResponse:
         icon, title, subtitle, color = "⏳", "Pago en proceso", "Estamos verificando tu pago. Recibirás una confirmación pronto.", "#d97706"
 
     ref = f'<p style="font-size:12px;color:#9ca3af;margin-top:8px;font-family:monospace">{html.escape(txn_id)}</p>' if txn_id else ""
-    html = f"""<!DOCTYPE html>
+    _page = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -305,7 +305,7 @@ def _render_result_page(result: str, txn_id: str | None) -> HTMLResponse:
 </div>
 </body>
 </html>"""
-    return HTMLResponse(content=html)
+    return HTMLResponse(content=_page)
 
 
 def _error_page(message: str) -> str:
